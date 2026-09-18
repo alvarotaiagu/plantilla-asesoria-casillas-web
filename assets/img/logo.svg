@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 64" role="img" aria-labelledby="logoTitle">
+  <title id="logoTitle">Vilas &amp; Bugallo Asesores</title>
+  <!-- casilla de marca: cuadro con marcas de registro en las esquinas, como
+       las cruces de alineación de un formulario escaneado -->
+  <g transform="translate(2,2)">
+    <rect x="0" y="0" width="60" height="60" rx="3" fill="none" stroke="#3E6E6B" stroke-width="2.5"/>
+    <!-- marcas de registro -->
+    <path d="M0 12 V2 H10" fill="none" stroke="#3E6E6B" stroke-width="2" stroke-linecap="round"/>
+    <path d="M50 0 H60 V10" fill="none" stroke="#3E6E6B" stroke-width="2" stroke-linecap="round"/>
+    <path d="M60 50 V60 H50" fill="none" stroke="#3E6E6B" stroke-width="2" stroke-linecap="round"/>
+    <path d="M10 60 H0 V50" fill="none" stroke="#3E6E6B" stroke-width="2" stroke-linecap="round"/>
+    <!-- marca "hecho": la casilla marcada -->
+    <path d="M16 31 L27 42 L46 18" fill="none" stroke="#2B2E33" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="76" y="30" font-family="Manrope, sans-serif" font-weight="800" font-size="25" fill="#2B2E33" letter-spacing="-0.01em">Vilas <tspan fill="#3E6E6B">&amp;</tspan> Bugallo</text>
+  <text x="77" y="50" font-family="'JetBrains Mono', monospace" font-weight="500" font-size="11.5" letter-spacing="0.28em" fill="#3E6E6B">ASESORES</text>
+</svg>

@@ -1,0 +1,678 @@
+/* ==========================================================================
+   Vilas & Bugallo Asesores · «Casillas»
+   --------------------------------------------------------------------------
+   La rejilla de un formulario tributario como sistema de diseño: recuadros
+   finos, casillas numeradas, cifras en monoespaciada tabular. Sin rojo ni
+   ámbar: gris papel, grafito y un único acento en petróleo.
+   Contraste calculado con scripts/contrast.js, nunca a ojo. Ningún texto se
+   apaga con opacity: cada apagado es un token de color con su contraste
+   comprobado (ver comentarios junto a cada token).
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  /* paleta ------------------------------------------------------------- */
+  --papel: #E7E5DF;
+  --papel-panel: #DEDCD5;      /* un paso más oscuro, para paneles sobre papel */
+  --grafito: #2B2E33;
+  --grafito-panel: #23262B;    /* un paso más oscuro que grafito, para fondos oscuros */
+  --petroleo: #3E6E6B;
+  --petroleo-oscuro: #2F5350;  /* petróleo oscurecido: 6.74:1 sobre papel (ver contrast.js) */
+  --blanco: #FFFFFF;
+
+  /* texto: cada apagado lleva su contraste medido con contrast.js ------- */
+  --texto: var(--grafito);                 /* 10.82:1 sobre papel */
+  --texto-apagado: #636567;                /* 4.65:1 sobre papel */
+  --texto-sobre-petroleo: var(--blanco);   /* 5.76:1 sobre petróleo */
+  --texto-sobre-grafito: var(--papel);     /* 10.82:1 sobre grafito */
+  --texto-apagado-sobre-grafito: #9C9C9A;  /* 4.95:1 sobre grafito */
+  --texto-acento: var(--petroleo-oscuro);  /* petróleo como TEXTO (no como marca): 6.74:1 */
+
+  --borde: #B9B6AC;
+  --borde-fuerte: var(--grafito);
+
+  /* tipografía ----------------------------------------------------------- */
+  --f-manrope: 'Manrope', system-ui, sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+
+  /* estructura ------------------------------------------------------------ */
+  --nav-h: 4.5rem;
+  --margen-lateral: 1.9rem;   /* ancho de la franja "margen de formulario" */
+  --radio: 2px;
+  --max: 78rem;
+
+  color-scheme: light;
+}
+
+/* ==========================================================================
+   Reset mínimo
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html { overflow-x: clip; scroll-behavior: auto; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--papel);
+  color: var(--texto);
+  font-family: var(--f-manrope);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+h1, h2, h3, h4, p { margin: 0; }
+table { border-collapse: collapse; width: 100%; }
+:focus-visible { outline: 3px solid var(--petroleo); outline-offset: 2px; }
+
+.tab-nums { font-variant-numeric: tabular-nums; }
+
+.solo-sr {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+.contenedor {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+section { padding-block: clamp(4rem, 9vw, 8rem); position: relative; }
+
+/* fondo de rejilla muy tenue, como el papel cuadriculado de un formulario */
+.fondo-rejilla {
+  background-image:
+    repeating-linear-gradient(to right, rgba(43,46,51,0.055) 0 1px, transparent 1px 48px),
+    repeating-linear-gradient(to bottom, rgba(43,46,51,0.055) 0 1px, transparent 1px 48px);
+}
+
+.etiqueta-mono {
+  font-family: var(--f-mono);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--texto-acento);
+}
+
+.titulo-seccion {
+  font-size: clamp(1.9rem, 4.4vw, 3.1rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  color: var(--texto);
+  margin-top: 0.6rem;
+}
+.titulo-seccion em { color: var(--texto-acento); font-style: normal; }
+
+.parrafo-intro {
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  color: var(--texto-apagado);
+  max-width: 42rem;
+  margin-top: 1.1rem;
+}
+
+/* ==========================================================================
+   Casilla: la unidad visual de toda la web
+   ========================================================================== */
+.casilla {
+  position: relative;
+  border: 1.5px solid var(--borde);
+  background: var(--papel);
+  padding: 1.6rem;
+}
+.casilla-num {
+  position: absolute;
+  top: -0.72rem;
+  left: 1rem;
+  background: var(--papel);
+  padding-inline: 0.4rem;
+  font-family: var(--f-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--texto-acento);
+}
+/* la marca de registro: cuatro escuadras en las esquinas, como en un
+   formulario escaneado; se dibujan con gradientes, cero peticiones */
+.casilla-registro::before,
+.casilla-registro::after {
+  content: "";
+  position: absolute;
+  width: 11px; height: 11px;
+  pointer-events: none;
+}
+.casilla-registro::before {
+  top: -1px; left: -1px;
+  border-top: 2px solid var(--petroleo);
+  border-left: 2px solid var(--petroleo);
+}
+.casilla-registro::after {
+  bottom: -1px; right: -1px;
+  border-bottom: 2px solid var(--petroleo);
+  border-right: 2px solid var(--petroleo);
+}
+
+/* estado "rellena": lo activa un IntersectionObserver, funciona sin GSAP */
+.casilla-marcable {
+  border-color: var(--borde);
+  transition: border-color 0.55s ease, background-color 0.55s ease;
+}
+.casilla-marcable .casilla-check {
+  position: absolute;
+  top: 1.1rem; right: 1.1rem;
+  width: 1.6rem; height: 1.6rem;
+}
+.casilla-marcable .casilla-check path {
+  fill: none;
+  stroke: var(--petroleo);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 34;
+  stroke-dashoffset: 34;
+  transition: stroke-dashoffset 0.5s ease 0.15s;
+}
+.casilla-marcable.esta-rellena {
+  border-color: var(--petroleo);
+  background: color-mix(in srgb, var(--petroleo) 6%, var(--papel));
+}
+.casilla-marcable.esta-rellena .casilla-check path {
+  stroke-dashoffset: 0;
+}
+
+/* ==========================================================================
+   Barra de progreso lateral: el margen impreso del formulario
+   ========================================================================== */
+.margen-progreso {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: var(--margen-lateral);
+  z-index: 60;
+  border-right: 1px solid var(--borde);
+  background: var(--papel-panel);
+  display: none;
+}
+html.has-motion .margen-progreso { display: block; }
+.margen-progreso-pista {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(to bottom, var(--borde) 0 1px, transparent 1px 5.6%);
+}
+.margen-progreso-relleno {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 0%;
+  background: var(--petroleo);
+  transform-origin: bottom;
+}
+.margen-progreso-texto {
+  position: absolute;
+  bottom: 0.9rem; left: 50%;
+  transform: translateX(-50%) rotate(-90deg);
+  transform-origin: center;
+  white-space: nowrap;
+  font-family: var(--f-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+  color: var(--texto-apagado);
+}
+@media (max-width: 760px) { .margen-progreso { width: 10px; } .margen-progreso-texto { display: none; } }
+
+/* deja hueco a la franja en el resto del contenido */
+html.has-motion body { padding-left: var(--margen-lateral); }
+@media (max-width: 760px) { html.has-motion body { padding-left: 10px; } }
+
+/* ==========================================================================
+   Cabecera
+   ========================================================================== */
+.cabecera {
+  position: sticky; top: 0; z-index: 50;
+  height: var(--nav-h);
+  display: flex; align-items: center;
+  background: color-mix(in srgb, var(--papel) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.cabecera.is-scrolled { border-bottom-color: var(--borde); box-shadow: 0 8px 24px -20px rgba(43,46,51,0.4); }
+.cabecera .contenedor { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+.marca { display: flex; align-items: center; }
+.marca img { height: 2.15rem; width: auto; }
+.nav { display: none; }
+.nav ul { display: flex; gap: 1.9rem; align-items: center; }
+.nav a {
+  font-size: 0.92rem; font-weight: 600; color: var(--texto-apagado);
+  position: relative; padding-block: 0.3rem;
+}
+.nav a::after {
+  content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 2px;
+  background: var(--petroleo); transition: right 0.3s ease;
+}
+.nav a:hover, .nav a.is-active { color: var(--texto); }
+.nav a:hover::after, .nav a.is-active::after { right: 0; }
+
+.cabecera-acciones { display: flex; align-items: center; gap: 0.9rem; }
+.boton {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  padding: 0.75rem 1.3rem;
+  font-weight: 700; font-size: 0.92rem;
+  border: 1.5px solid var(--borde-fuerte);
+  position: relative;
+}
+.boton-primario { background: var(--petroleo); border-color: var(--petroleo); color: var(--texto-sobre-petroleo); }
+.boton-primario:hover { background: var(--petroleo-oscuro); border-color: var(--petroleo-oscuro); }
+.boton-fantasma { background: transparent; color: var(--texto); }
+.boton-fantasma:hover { background: var(--grafito); color: var(--texto-sobre-grafito); }
+.boton-cabecera { display: none; }
+
+.nav-toggle {
+  width: 2.6rem; height: 2.6rem;
+  display: grid; place-items: center;
+  border: 1.5px solid var(--borde-fuerte);
+}
+.nav-toggle span, .nav-toggle span::before, .nav-toggle span::after {
+  content: ""; display: block; width: 1.15rem; height: 2px; background: var(--texto);
+  position: relative; transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.nav-toggle span::before { position: absolute; top: -6px; }
+.nav-toggle span::after { position: absolute; top: 6px; }
+.nav-toggle[aria-expanded="true"] span { background: transparent; }
+.nav-toggle[aria-expanded="true"] span::before { transform: translateY(6px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span::after { transform: translateY(-6px) rotate(-45deg); }
+
+.nav-movil {
+  position: fixed; inset: var(--nav-h) 0 0 0; z-index: 55;
+  background: var(--papel);
+  padding: 2rem clamp(1.25rem, 6vw, 3rem);
+  overflow-y: auto;
+}
+.nav-movil ul { display: flex; flex-direction: column; gap: 0.2rem; }
+.nav-movil a {
+  display: flex; align-items: center; gap: 0.8rem;
+  padding: 1.1rem 0; font-size: 1.4rem; font-weight: 700;
+  border-bottom: 1px solid var(--borde);
+}
+.nav-movil a span { font-family: var(--f-mono); font-size: 0.9rem; color: var(--texto-acento); }
+.nav-movil .boton { margin-top: 1.6rem; width: 100%; justify-content: center; }
+
+@media (min-width: 960px) {
+  .nav { display: block; }
+  .boton-cabecera { display: inline-flex; }
+  .nav-toggle, .nav-movil { display: none; }
+}
+
+/* ==========================================================================
+   Cortina de entrada
+   --------------------------------------------------------------------------
+   Gesto propio de «Casillas»: una rejilla de casillas vacías se marca de
+   golpe (X encadenadas en oleada) y, en cuanto termina, el bloque entero se
+   retira con un barrido — como quien completa un impreso y lo aparta.
+   ========================================================================== */
+[data-cortina] {
+  position: fixed; inset: 0; z-index: 200;
+  background: var(--papel);
+  display: grid; place-items: center;
+}
+.cortina-rejilla {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: clamp(6px, 1.4vw, 14px);
+  width: min(78vw, 620px);
+}
+.cortina-casilla {
+  aspect-ratio: 1;
+  border: 1.5px solid var(--borde);
+  position: relative;
+}
+.cortina-casilla svg { position: absolute; inset: 0; width: 100%; height: 100%; padding: 22%; }
+.cortina-casilla path {
+  fill: none; stroke: var(--petroleo); stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 40; stroke-dashoffset: 40;
+}
+.cortina-marca {
+  position: absolute;
+  bottom: clamp(1.5rem, 6vh, 3rem); left: 50%; transform: translateX(-50%);
+  text-align: center;
+}
+.cortina-marca-nombre {
+  font-weight: 800; font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+  letter-spacing: -0.01em; color: var(--texto); opacity: 0;
+}
+.cortina-marca-sub {
+  margin-top: 0.4rem;
+  font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--texto-acento); opacity: 0;
+}
+.cortina-barrido {
+  position: absolute; inset: 0; background: var(--grafito);
+  transform: scaleX(0); transform-origin: left;
+}
+/* si no hay JS (o falla la carga de GSAP) el html.has-motion nunca se
+   activa y la cortina no lleva estos estilos: por eso [hidden] basta para
+   retirarla por defecto y solo el JS decide taparla mientras se resuelve */
+[data-cortina] { display: none; }
+html.cortina-puesta [data-cortina] { display: grid; }
+
+/* ==========================================================================
+   Portada
+   ========================================================================== */
+.portada {
+  min-height: calc(100svh - var(--nav-h));
+  display: flex; align-items: center;
+  padding-block: clamp(3rem, 8vw, 5rem);
+}
+.portada .contenedor { display: grid; gap: clamp(2.5rem, 5vw, 4rem); grid-template-columns: 1fr; align-items: center; }
+@media (min-width: 1080px) { .portada .contenedor { grid-template-columns: 1.05fr 0.95fr; } }
+
+.portada-kicker { display: flex; align-items: center; gap: 0.7rem; }
+.portada-kicker .punto { width: 8px; height: 8px; background: var(--petroleo); border-radius: 50%; }
+
+.portada-titulo {
+  margin-top: 1rem;
+  font-size: clamp(2.5rem, 6.4vw, 4.6rem);
+  font-weight: 800; letter-spacing: -0.03em; line-height: 0.99;
+}
+.portada-titulo em { color: var(--texto-acento); font-style: normal; }
+
+/* char-reveal: el estado "vacío" vive en CSS bajo has-motion; JS anima yPercent
+   a 0 y también fija y:0 (GSAP lee el translate3d del CSS como px, no %) */
+html.has-motion .split-word { overflow: hidden; display: inline-block; white-space: nowrap; vertical-align: top; }
+html.has-motion .split-char { display: inline-block; transform: translate3d(0,115%,0); }
+
+.portada-texto { margin-top: 1.4rem; font-size: 1.12rem; color: var(--texto-apagado); max-width: 34rem; }
+.portada-acciones { margin-top: 2.1rem; display: flex; flex-wrap: wrap; gap: 1rem; }
+.portada-cifras { margin-top: 2.6rem; display: flex; gap: clamp(1.6rem, 4vw, 2.6rem); flex-wrap: wrap; }
+.portada-cifra-num {
+  font-family: var(--f-mono); font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 2.1rem); color: var(--texto);
+}
+.portada-cifra-etq { font-size: 0.82rem; color: var(--texto-apagado); margin-top: 0.15rem; }
+
+/* --- el impreso de la portada: casillas que se marcan solas al cargar --- */
+.portada-impreso {
+  border: 1.5px solid var(--borde-fuerte);
+  background: var(--papel-panel);
+  padding: 1.5rem;
+  position: relative;
+}
+.portada-impreso-cab {
+  display: flex; justify-content: space-between; align-items: baseline;
+  border-bottom: 1px dashed var(--borde);
+  padding-bottom: 0.9rem; margin-bottom: 1rem;
+  font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.14em;
+  color: var(--texto-apagado); text-transform: uppercase;
+}
+.impreso-filas { display: flex; flex-direction: column; gap: 0.6rem; }
+.impreso-fila { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 0.8rem; }
+.impreso-fila-etq { font-size: 0.86rem; color: var(--texto-apagado); }
+.impreso-casillas { display: flex; gap: 0.4rem; }
+.impreso-casilla {
+  width: 2.1rem; height: 2.1rem;
+  border: 1.5px solid var(--borde-fuerte);
+  display: grid; place-items: center;
+  font-family: var(--f-mono); font-weight: 700; font-size: 0.95rem;
+  background: var(--papel);
+  position: relative;
+  overflow: hidden;
+}
+.impreso-casilla span { opacity: 0; transform: translateY(4px); transition: opacity 0.3s ease, transform 0.3s ease; }
+.impreso-casilla.esta-rellena { background: var(--petroleo); color: var(--texto-sobre-petroleo); border-color: var(--petroleo); }
+.impreso-casilla.esta-rellena span { opacity: 1; transform: translateY(0); }
+
+/* ==========================================================================
+   Servicios: rejilla de casillas numeradas
+   ========================================================================== */
+.servicios-rejilla {
+  margin-top: clamp(2.4rem, 5vw, 3.4rem);
+  display: grid; gap: 1.4rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 720px) { .servicios-rejilla { grid-template-columns: repeat(2, 1fr); } }
+
+.servicio {
+  padding-top: 2rem;
+}
+.servicio-icono { width: 2.4rem; height: 2.4rem; color: var(--petroleo); }
+.servicio-titulo { margin-top: 1rem; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.01em; }
+.servicio-texto { margin-top: 0.6rem; color: var(--texto-apagado); font-size: 0.98rem; }
+.servicio-lista { margin-top: 1.1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.servicio-lista li {
+  font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.03em;
+  border: 1px solid var(--borde); padding: 0.3rem 0.55rem; color: var(--texto-apagado);
+}
+
+/* ==========================================================================
+   Confianza: la reseña grande en su propia casilla, con contador
+   ========================================================================== */
+.confianza { }
+.confianza-caja {
+  margin-top: clamp(2.4rem, 5vw, 3.4rem);
+  display: grid; gap: 0; grid-template-columns: 1fr;
+  border: 1.5px solid var(--borde-fuerte);
+}
+@media (min-width: 900px) { .confianza-caja { grid-template-columns: 0.85fr 1.15fr; } }
+
+.confianza-resumen {
+  padding: clamp(1.8rem, 3.4vw, 2.6rem);
+  background: var(--grafito); color: var(--texto-sobre-grafito);
+  display: flex; flex-direction: column; justify-content: center; gap: 1.4rem;
+}
+.confianza-nota { font-family: var(--f-mono); font-weight: 700; font-size: clamp(3rem, 7vw, 4.2rem); line-height: 1; }
+.confianza-nota small { font-size: 1.6rem; color: var(--texto-apagado-sobre-grafito); }
+.confianza-estrellas { display: flex; gap: 0.25rem; }
+.confianza-estrellas svg { width: 1.3rem; height: 1.3rem; }
+.confianza-estrellas .fondo { fill: none; stroke: var(--texto-apagado-sobre-grafito); stroke-width: 1.4; }
+.confianza-estrellas .relleno { fill: var(--petroleo); }
+.confianza-pie { font-size: 0.85rem; color: var(--texto-apagado-sobre-grafito); max-width: 22rem; }
+.confianza-pie strong { color: var(--texto-sobre-grafito); font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+
+.testimonios { display: grid; grid-template-columns: 1fr; }
+@media (min-width: 560px) { .testimonios { grid-template-columns: repeat(2, 1fr); } }
+.testimonio {
+  padding: 1.6rem clamp(1.3rem, 2.6vw, 1.9rem);
+  border-top: 1px solid var(--borde);
+  border-left: 1px solid var(--borde);
+}
+.testimonios .testimonio:nth-child(-n+2) { border-top: none; }
+@media (max-width: 559px) { .testimonios .testimonio { border-left: none; } .testimonios .testimonio:first-child { border-top: none; } }
+.testimonio blockquote { margin: 0; font-size: 0.97rem; color: var(--texto); }
+.testimonio cite { display: block; margin-top: 0.9rem; font-style: normal; font-size: 0.82rem; color: var(--texto-apagado); }
+.testimonio cite strong { color: var(--texto); }
+
+/* ==========================================================================
+   Calendario fiscal: tabla de casillas
+   ========================================================================== */
+.calendario-tabla-envoltorio {
+  margin-top: clamp(2.2rem, 5vw, 3rem);
+  border: 1.5px solid var(--borde-fuerte);
+  overflow-x: auto;
+}
+.calendario-tabla { min-width: 760px; }
+.calendario-tabla th, .calendario-tabla td {
+  text-align: left;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid var(--borde);
+  border-right: 1px solid var(--borde);
+  vertical-align: middle;
+}
+.calendario-tabla th:last-child, .calendario-tabla td:last-child { border-right: none; }
+.calendario-tabla thead th {
+  background: var(--grafito); color: var(--texto-sobre-grafito);
+  font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  font-weight: 600;
+}
+.calendario-tabla tbody tr:last-child td { border-bottom: none; }
+.calendario-tabla tbody tr:hover { background: var(--papel-panel); }
+.calendario-mes { font-weight: 700; }
+.calendario-modelos { font-family: var(--f-mono); color: var(--texto-acento); font-weight: 600; font-size: 0.9rem; }
+.calendario-dias { font-family: var(--f-mono); font-weight: 700; font-variant-numeric: tabular-nums; }
+.fila-proxima { position: relative; background: color-mix(in srgb, var(--petroleo) 8%, var(--papel)); }
+.fila-proxima td:first-child::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--petroleo);
+}
+.chip-proxima {
+  display: inline-block; margin-left: 0.6rem;
+  font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.12em;
+  padding: 0.15rem 0.4rem; background: var(--petroleo); color: var(--texto-sobre-petroleo);
+  vertical-align: middle; text-transform: uppercase;
+}
+.calendario-nota { margin-top: 1.1rem; font-size: 0.85rem; color: var(--texto-apagado); }
+
+/* ==========================================================================
+   Equipo + por qué elegirnos, en una sola sección
+   ========================================================================== */
+.equipo-envoltorio {
+  margin-top: clamp(2.4rem, 5vw, 3.4rem);
+  display: grid; gap: clamp(2.4rem, 5vw, 4rem);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 980px) { .equipo-envoltorio { grid-template-columns: 1.1fr 0.9fr; } }
+
+.equipo-personas { display: grid; gap: 1.6rem; grid-template-columns: 1fr; }
+@media (min-width: 620px) { .equipo-personas { grid-template-columns: repeat(2, 1fr); } }
+.persona-retrato { border: 1.5px solid var(--borde-fuerte); aspect-ratio: 1; overflow: hidden; }
+.persona-nombre { margin-top: 1rem; font-weight: 800; font-size: 1.12rem; }
+.persona-cargo { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--texto-acento); margin-top: 0.25rem; }
+.persona-bio { margin-top: 0.7rem; font-size: 0.9rem; color: var(--texto-apagado); }
+
+.porque { display: flex; flex-direction: column; }
+.porque-item {
+  display: grid; grid-template-columns: auto 1fr; gap: 1rem;
+  padding-block: 1.15rem;
+  border-top: 1px solid var(--borde);
+}
+.porque-item:last-child { border-bottom: 1px solid var(--borde); }
+.porque-num { font-family: var(--f-mono); font-weight: 700; color: var(--texto-acento); font-size: 0.95rem; padding-top: 0.1rem; }
+.porque-titulo { font-weight: 700; }
+.porque-texto { margin-top: 0.35rem; font-size: 0.88rem; color: var(--texto-apagado); }
+
+/* ==========================================================================
+   Contacto + pie
+   ========================================================================== */
+.contacto-envoltorio {
+  margin-top: clamp(2.2rem, 5vw, 3rem);
+  display: grid; gap: 1.4rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) { .contacto-envoltorio { grid-template-columns: 1.05fr 0.95fr; } }
+
+.ficha-despacho { padding: clamp(1.7rem, 3vw, 2.3rem); }
+.ficha-fila { display: grid; grid-template-columns: 7.5rem 1fr; gap: 0.6rem; padding-block: 0.85rem; border-top: 1px dashed var(--borde); }
+.ficha-fila:first-child { border-top: none; }
+.ficha-fila dt { font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--texto-apagado); }
+.ficha-fila dd { margin: 0; font-weight: 600; }
+.ficha-fila a:hover { color: var(--texto-acento); text-decoration: underline; }
+.ficha-horario td, .ficha-horario th { padding: 0.2rem 0; font-size: 0.86rem; }
+.ficha-horario th { text-align: left; font-weight: 500; color: var(--texto-apagado); }
+.ficha-horario td { text-align: right; font-family: var(--f-mono); }
+
+.mapa-caja { position: relative; padding: 0; min-height: 20rem; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.mapa-caja iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.map-consent {
+  display: flex; flex-direction: column; align-items: center; gap: 0.9rem;
+  text-align: center; padding: 2rem;
+}
+.map-consent svg { width: 2.4rem; height: 2.4rem; color: var(--petroleo); }
+.map-consent-texto { font-size: 0.85rem; color: var(--texto-apagado); max-width: 20rem; }
+
+.pie {
+  background: var(--grafito); color: var(--texto-sobre-grafito);
+  padding-block: clamp(3rem, 6vw, 4.5rem) 2rem;
+}
+.pie .contenedor { display: grid; gap: 2.4rem; grid-template-columns: 1fr; }
+@media (min-width: 820px) { .pie .contenedor { grid-template-columns: 1.2fr 1fr 1fr; } }
+.pie-marca img { height: 2.1rem; filter: brightness(0) invert(1); }
+.pie-marca-texto { margin-top: 1rem; font-size: 0.88rem; color: var(--texto-apagado-sobre-grafito); max-width: 24rem; }
+.pie h3 { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--texto-apagado-sobre-grafito); margin-bottom: 0.9rem; }
+.pie ul { display: flex; flex-direction: column; gap: 0.55rem; }
+.pie a:hover { color: var(--petroleo); }
+.pie-legal {
+  margin-top: 2.6rem; padding-top: 1.6rem; border-top: 1px solid #3c3f45;
+  display: flex; flex-wrap: wrap; gap: 0.6rem 1.6rem; justify-content: space-between; align-items: flex-start;
+  font-size: 0.8rem; color: var(--texto-apagado-sobre-grafito);
+}
+.pie-demo {
+  max-width: 44rem; font-size: 0.8rem; color: var(--texto-apagado-sobre-grafito);
+  border: 1px dashed #52565d; padding: 0.85rem 1rem;
+}
+.pie-demo strong { color: var(--texto-sobre-grafito); }
+.pie-enlaces-legales { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; }
+
+/* ==========================================================================
+   Aviso de cookies — el bug conocido: display:flex SOLO junto a :not([hidden])
+   ========================================================================== */
+.cookie-banner {
+  position: fixed; left: 1rem; right: 1rem; bottom: 1rem; z-index: 90;
+  max-width: 34rem; margin-inline: auto;
+  background: var(--grafito); color: var(--texto-sobre-grafito);
+  border: 1px solid #454952;
+  padding: 1.2rem 1.3rem;
+  gap: 1rem;
+  box-shadow: 0 18px 40px -18px rgba(0,0,0,0.5);
+}
+.cookie-banner:not([hidden]) { display: flex; flex-direction: column; }
+.cookie-banner p { font-size: 0.86rem; color: var(--texto-apagado-sobre-grafito); }
+.cookie-banner a { text-decoration: underline; color: var(--texto-sobre-grafito); }
+.cookie-acciones { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+.cookie-acciones .boton { padding: 0.6rem 1.05rem; font-size: 0.86rem; }
+
+/* ==========================================================================
+   WhatsApp flotante
+   ========================================================================== */
+.whatsapp-flotante {
+  position: fixed; right: 1.3rem; bottom: 1.3rem; z-index: 80;
+  width: 3.6rem; height: 3.6rem;
+  display: grid; place-items: center;
+  background: var(--petroleo); color: var(--texto-sobre-petroleo);
+  border: 1.5px solid var(--grafito);
+  box-shadow: 0 14px 28px -12px rgba(43,46,51,0.55);
+}
+.whatsapp-flotante svg { width: 1.6rem; height: 1.6rem; }
+@media (min-width: 960px) { .whatsapp-flotante { right: calc(var(--margen-lateral) + 1.3rem); } }
+
+/* ==========================================================================
+   Barra de progreso interna del scroll y utilidades de movimiento
+   ========================================================================== */
+[data-reveal] { }
+html.has-motion [data-reveal] { opacity: 0; transform: translateY(22px); }
+html.has-motion [data-reveal].revelado { opacity: 1; transform: translateY(0); transition: opacity 0.9s ease, transform 0.9s ease; }
+
+/* ==========================================================================
+   404
+   ========================================================================== */
+.pagina-404 {
+  min-height: 100svh; display: flex; align-items: center; justify-content: center;
+  padding: 2rem;
+}
+.pagina-404 .casilla { max-width: 30rem; text-align: center; }
+.error-num { font-family: var(--f-mono); font-weight: 700; font-size: 3.2rem; color: var(--texto-acento); }
+
+/* ==========================================================================
+   Páginas legales sencillas
+   ========================================================================== */
+.legal-main { padding-block: clamp(3rem, 7vw, 5rem); }
+.legal-main .contenedor { max-width: 46rem; }
+.legal-main h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); font-weight: 800; }
+.legal-main h2 { margin-top: 2.2rem; font-size: 1.25rem; font-weight: 700; }
+.legal-main p, .legal-main li { color: var(--texto-apagado); font-size: 0.96rem; margin-top: 0.7rem; }
+.legal-main ul { list-style: disc; padding-left: 1.3rem; }
+.legal-main a { color: var(--texto-acento); text-decoration: underline; }
+
+/* ==========================================================================
+   Accesibilidad de movimiento: nunca queda tapado
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  /* el contenido sigue cambiando (casillas, contadores, calendario): lo que
+     se apaga aquí es únicamente la transición visual, nunca el dato. */
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

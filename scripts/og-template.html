@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<style>
+  @font-face { font-family: 'Manrope'; src: local('Manrope'); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1200px; height:630px; overflow:hidden; }
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    background: #E7E5DF;
+    background-image:
+      repeating-linear-gradient(to right, rgba(43,46,51,0.07) 0 1px, transparent 1px 48px),
+      repeating-linear-gradient(to bottom, rgba(43,46,51,0.07) 0 1px, transparent 1px 48px);
+    position: relative;
+  }
+  .marco { position:absolute; inset: 28px; border: 2px solid #2B2E33; }
+  .reg { position:absolute; width:26px; height:26px; }
+  .reg.tl { top:28px; left:28px; border-top:4px solid #3E6E6B; border-left:4px solid #3E6E6B; }
+  .reg.tr { top:28px; right:28px; border-top:4px solid #3E6E6B; border-right:4px solid #3E6E6B; }
+  .reg.bl { bottom:28px; left:28px; border-bottom:4px solid #3E6E6B; border-left:4px solid #3E6E6B; }
+  .reg.br { bottom:28px; right:28px; border-bottom:4px solid #3E6E6B; border-right:4px solid #3E6E6B; }
+  .contenido { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding: 0 120px; }
+  .icono { width:96px; height:96px; border:4px solid #3E6E6B; display:flex; align-items:center; justify-content:center; margin-bottom: 34px; background:#E7E5DF; }
+  .icono svg { width: 52px; height:52px; }
+  h1 { font-size: 58px; font-weight: 800; color:#2B2E33; letter-spacing:-0.02em; line-height:1.05; }
+  h1 em { color:#3E6E6B; font-style:normal; }
+  p { margin-top: 22px; font-size: 24px; color:#636567; font-weight:600; }
+  .mono { position:absolute; bottom:56px; left:0; right:0; text-align:center; font-family: 'JetBrains Mono', monospace; font-size:15px; letter-spacing:0.28em; text-transform:uppercase; color:#3E6E6B; font-weight:600; }
+</style>
+</head>
+<body>
+  <div class="marco"></div>
+  <div class="reg tl"></div><div class="reg tr"></div><div class="reg bl"></div><div class="reg br"></div>
+  <div class="contenido">
+    <div class="icono">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 13l5 5L20 6" stroke="#2B2E33" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <h1>Vilas <em>&amp;</em> Bugallo<br>Asesores</h1>
+    <p>Asesoría fiscal, laboral y contable en Ordes (A Coruña)</p>
+  </div>
+  <div class="mono">La casilla correcta, en el plazo correcto</div>
+</body>
+</html>

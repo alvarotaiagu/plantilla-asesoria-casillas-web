@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="tXoan">
+  <title id="tXoan">Retrato ilustrado de Xoán Vilas Pardo</title>
+  <rect width="200" height="200" fill="#E7E5DF"/>
+  <rect x="1" y="1" width="198" height="198" fill="none" stroke="#3E6E6B" stroke-width="2"/>
+  <!-- marcas de registro, para que combine con la casilla de marca -->
+  <path d="M1 15 V1 H15" fill="none" stroke="#3E6E6B" stroke-width="2"/>
+  <path d="M185 1 H199 V15" fill="none" stroke="#3E6E6B" stroke-width="2"/>
+  <path d="M199 185 V199 H185" fill="none" stroke="#3E6E6B" stroke-width="2"/>
+  <path d="M15 199 H1 V185" fill="none" stroke="#3E6E6B" stroke-width="2"/>
+  <g>
+    <circle cx="100" cy="80" r="38" fill="#2B2E33"/>
+    <path d="M40 190 C40 138 62 112 100 112 C138 112 160 138 160 190 Z" fill="#2B2E33"/>
+    <path d="M64 78 C64 55 80 40 100 40 C120 40 136 55 136 78 L136 84 C136 66 122 58 100 58 C78 58 64 66 64 84 Z" fill="#3E6E6B"/>
+  </g>
+</svg>

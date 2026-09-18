@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<!--
+  Sitio de demostración. Vilas & Bugallo Asesores es un negocio ficticio;
+  los datos, fotografías y opiniones son de muestra. Plantilla de la
+  biblioteca de WEBS NEGOCIOS (sector asesoría fiscal/laboral/contable),
+  no un encargo real.
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vilas & Bugallo Asesores — Asesoría fiscal, laboral y contable en Ordes</title>
+<meta name="description" content="Asesoría fiscal, laboral, contable y de constitución de sociedades en Ordes (A Coruña). Un despacho, un interlocutor, las casillas correctas en cada plazo.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://alvarotaiagu.github.io/plantilla-asesoria-casillas-web/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Vilas & Bugallo Asesores">
+<meta property="og:title" content="Vilas & Bugallo Asesores — Asesoría fiscal, laboral y contable en Ordes">
+<meta property="og:description" content="Un despacho, un interlocutor, las casillas correctas en cada plazo. Fiscal, laboral, contable y sociedades en Ordes (A Coruña). Sitio de demostración.">
+<meta property="og:image" content="https://alvarotaiagu.github.io/plantilla-asesoria-casillas-web/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://alvarotaiagu.github.io/plantilla-asesoria-casillas-web/">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#E7E5DF">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AccountingService",
+  "name": "Vilas & Bugallo Asesores",
+  "description": "Asesoría fiscal, laboral, contable y de constitución de sociedades en Ordes, A Coruña.",
+  "url": "https://alvarotaiagu.github.io/plantilla-asesoria-casillas-web/",
+  "telephone": "+34981000084",
+  "email": "info@vilasybugallo.com",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Rúa Progreso, 22, 1º",
+    "addressLocality": "Ordes",
+    "addressRegion": "A Coruña",
+    "postalCode": "15680",
+    "addressCountry": "ES"
+  },
+  "areaServed": ["Ordes", "Oroso", "Cerceda", "Tordoia", "Frades", "A Coruña"],
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "14:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday","Thursday"], "opens": "16:00", "closes": "19:00" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- ======================================================================
+     Cortina de entrada: rejilla de casillas que se marcan de golpe y se
+     retiran con un barrido. Ver js/main.js — retirada garantizada incluso
+     sin GSAP o con movimiento reducido.
+     ====================================================================== -->
+<div data-cortina hidden aria-hidden="true">
+  <div class="cortina-rejilla" aria-hidden="true"></div>
+  <p class="cortina-marca">
+    <span class="cortina-marca-nombre">Vilas &amp; Bugallo</span><br>
+    <span class="cortina-marca-sub">Asesores · Ordes</span>
+  </p>
+  <div class="cortina-barrido"></div>
+</div>
+
+<!-- margen lateral: progreso de scroll, como el margen impreso de un formulario -->
+<div class="margen-progreso" aria-hidden="true">
+  <div class="margen-progreso-pista"></div>
+  <div class="margen-progreso-relleno" data-progreso></div>
+  <span class="margen-progreso-texto">NO ESCRIBIR EN ESTE MARGEN · § VILAS &amp; BUGALLO</span>
+</div>
+
+<a href="#contenido" class="solo-sr">Saltar al contenido</a>
+
+<header class="cabecera">
+  <div class="contenedor">
+    <a href="#portada" class="marca">
+      <img src="assets/img/logo.svg" width="342" height="66" alt="Vilas & Bugallo Asesores">
+    </a>
+    <nav class="nav" aria-label="Navegación principal">
+      <ul>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#confianza">Confianza</a></li>
+        <li><a href="#calendario">Calendario</a></li>
+        <li><a href="#equipo">Equipo</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+    <div class="cabecera-acciones">
+      <a href="#contacto" class="boton boton-primario boton-cabecera" data-magnetic>Pedir cita</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-movil" aria-label="Abrir menú">
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav id="nav-movil" class="nav-movil" hidden aria-label="Navegación móvil">
+  <ul>
+    <li><a href="#servicios"><span>01</span> Servicios</a></li>
+    <li><a href="#confianza"><span>02</span> Confianza</a></li>
+    <li><a href="#calendario"><span>03</span> Calendario</a></li>
+    <li><a href="#equipo"><span>04</span> Equipo</a></li>
+    <li><a href="#contacto"><span>05</span> Contacto</a></li>
+  </ul>
+  <a href="#contacto" class="boton boton-primario">Pedir cita</a>
+</nav>
+
+<main id="contenido">
+
+<!-- ======================================================================
+     1 · PORTADA
+     ====================================================================== -->
+<section id="portada" class="portada fondo-rejilla">
+  <div class="contenedor">
+    <div class="portada-col">
+      <p class="portada-kicker etiqueta-mono"><span class="punto"></span> Asesoría en Ordes · A Coruña</p>
+      <h1 class="portada-titulo titular" data-char>La casilla <em>correcta</em>, en el plazo correcto</h1>
+      <p class="portada-texto">Fiscal, laboral, contable y constitución de sociedades para autónomos y pymes de Ordes y la comarca. Un despacho, un interlocutor, cero casillas en blanco.</p>
+      <div class="portada-acciones">
+        <a href="#contacto" class="boton boton-primario" data-magnetic>Pedir una cita</a>
+        <a href="#servicios" class="boton boton-fantasma">Ver los servicios</a>
+      </div>
+      <div class="portada-cifras">
+        <div>
+          <p class="portada-cifra-num tab-nums"><span data-contador="17">0</span> años</p>
+          <p class="portada-cifra-etq">llevando cuentas en la comarca</p>
+        </div>
+        <div>
+          <p class="portada-cifra-num tab-nums"><span data-contador="4">0</span> áreas</p>
+          <p class="portada-cifra-etq">fiscal · laboral · contable · sociedades</p>
+        </div>
+        <div>
+          <p class="portada-cifra-num tab-nums"><span data-contador="24">0</span>h</p>
+          <p class="portada-cifra-etq">de respuesta media en días hábiles</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="portada-col">
+      <div class="portada-impreso casilla-registro" role="img" aria-label="Impreso de muestra con casillas que se van marcando: modelo 303, IVA, sociedad limitada y plazo enero-marzo.">
+        <div class="portada-impreso-cab">
+          <span>Impreso 100/2026 · muestra</span>
+          <span>Ordes (A Coruña)</span>
+        </div>
+        <div class="impreso-filas">
+          <div class="impreso-fila">
+            <p class="impreso-fila-etq">Modelo a presentar</p>
+            <div class="impreso-casillas">
+              <div class="impreso-casilla" data-impreso data-valor="3"><span>3</span></div>
+              <div class="impreso-casilla" data-impreso data-valor="0"><span>0</span></div>
+              <div class="impreso-casilla" data-impreso data-valor="3"><span>3</span></div>
+            </div>
+          </div>
+          <div class="impreso-fila">
+            <p class="impreso-fila-etq">Trimestre</p>
+            <div class="impreso-casillas">
+              <div class="impreso-casilla" data-impreso data-valor="X"><span>X</span></div>
+            </div>
+          </div>
+          <div class="impreso-fila">
+            <p class="impreso-fila-etq">Régimen societario</p>
+            <div class="impreso-casillas">
+              <div class="impreso-casilla" data-impreso data-valor="S"><span>S</span></div>
+              <div class="impreso-casilla" data-impreso data-valor="L"><span>L</span></div>
+            </div>
+          </div>
+          <div class="impreso-fila">
+            <p class="impreso-fila-etq">Presentado en plazo</p>
+            <div class="impreso-casillas">
+              <div class="impreso-casilla" data-impreso data-valor="✓"><span>✓</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     2 · SERVICIOS — rejilla de casillas numeradas
+     ====================================================================== -->
+<section id="servicios">
+  <div class="contenedor">
+    <p class="etiqueta-mono">Casillas 01 – 04</p>
+    <h2 class="titulo-seccion titular" data-char>Cuatro áreas, <em>un solo despacho</em></h2>
+    <p class="parrafo-intro">No repartimos su empresa entre tres asesorías distintas. Fiscal, laboral, contable y sociedades se llevan desde la misma mesa, con la misma persona de contacto.</p>
+
+    <div class="servicios-rejilla">
+      <article class="servicio casilla casilla-registro casilla-marcable" data-reveal-casilla>
+        <span class="casilla-num">01</span>
+        <svg class="casilla-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13l5 5L20 6"/></svg>
+        <svg class="servicio-icono" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="8" y="6" width="24" height="28" rx="1" stroke="currentColor" stroke-width="2"/><path d="M13 14h14M13 20h14M13 26h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <h3 class="servicio-titulo">Fiscal</h3>
+        <p class="servicio-texto">IRPF, IVA, Impuesto de Sociedades e impuestos locales, con el calendario de modelos gestionado desde el despacho, no desde su bandeja de entrada.</p>
+        <ul class="servicio-lista">
+          <li>Modelos 303 · 130 · 111</li>
+          <li>Renta e IS</li>
+          <li>Requerimientos de Hacienda</li>
+        </ul>
+      </article>
+
+      <article class="servicio casilla casilla-registro casilla-marcable" data-reveal-casilla>
+        <span class="casilla-num">02</span>
+        <svg class="casilla-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13l5 5L20 6"/></svg>
+        <svg class="servicio-icono" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="13" r="6" stroke="currentColor" stroke-width="2"/><path d="M8 34c0-7.2 5.4-12 12-12s12 4.8 12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <h3 class="servicio-titulo">Laboral</h3>
+        <p class="servicio-texto">Nóminas, contratos, altas y bajas en Seguridad Social, y la tramitación de ayudas y ERTEs cuando hace falta, con plazos que no se le pasan a nadie.</p>
+        <ul class="servicio-lista">
+          <li>Nóminas y Seguros Sociales</li>
+          <li>Contratación</li>
+          <li>Convenios colectivos</li>
+        </ul>
+      </article>
+
+      <article class="servicio casilla casilla-registro casilla-marcable" data-reveal-casilla>
+        <span class="casilla-num">03</span>
+        <svg class="casilla-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13l5 5L20 6"/></svg>
+        <svg class="servicio-icono" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="7" y="9" width="26" height="22" rx="1" stroke="currentColor" stroke-width="2"/><path d="M7 17h26M15 9v22" stroke="currentColor" stroke-width="2"/></svg>
+        <h3 class="servicio-titulo">Contable</h3>
+        <p class="servicio-texto">Contabilidad al día, libros oficiales y cuentas anuales depositadas sin sustos de última hora, con cifras que usted entiende antes de firmarlas.</p>
+        <ul class="servicio-lista">
+          <li>Libros oficiales</li>
+          <li>Cuentas anuales</li>
+          <li>Cierre y análisis trimestral</li>
+        </ul>
+      </article>
+
+      <article class="servicio casilla casilla-registro casilla-marcable" data-reveal-casilla>
+        <span class="casilla-num">04</span>
+        <svg class="casilla-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13l5 5L20 6"/></svg>
+        <svg class="servicio-icono" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 6l14 8v12l-14 8-14-8V14z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M20 6v28M6 14l14 8 14-8" stroke="currentColor" stroke-width="2"/></svg>
+        <h3 class="servicio-titulo">Sociedades</h3>
+        <p class="servicio-texto">Constitución de sociedades limitadas, estatutos, modificaciones y disoluciones, de la notaría al Registro Mercantil, paso a paso.</p>
+        <ul class="servicio-lista">
+          <li>Constitución de SL</li>
+          <li>Estatutos y pactos</li>
+          <li>Disoluciones</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     3 · CONFIANZA — la reseña grande en su propia casilla, antes del calendario
+     ====================================================================== -->
+<section id="confianza" class="fondo-rejilla">
+  <div class="contenedor">
+    <p class="etiqueta-mono">Casilla 05</p>
+    <h2 class="titulo-seccion titular" data-char>Lo que <em>marcan</em> quienes ya trabajan con nosotros</h2>
+    <p class="parrafo-intro">No hay ningún sello de plataforma detrás de esta nota: es la media de nuestra propia encuesta anual entre clientes, que respondemos aquí tal cual la reciben.</p>
+
+    <div class="confianza-caja" data-reveal-casilla>
+      <div class="confianza-resumen">
+        <p class="confianza-nota tab-nums"><span data-contador-dec="4.8">0,0</span><small>/5</small></p>
+        <div class="confianza-estrellas" data-estrellas="4.8" aria-hidden="true"></div>
+        <p class="confianza-pie">Valoración media de la encuesta anual a clientes, <strong class="tab-nums" data-contador="36">0</strong> respuestas el último año. No es una puntuación de Google ni de ninguna otra plataforma.</p>
+      </div>
+
+      <ul class="testimonios">
+        <li class="testimonio">
+          <blockquote><p>«Desde que llevan la asesoría no he tenido ni un recargo. Marcan la casilla antes de que se me olvide a mí.»</p></blockquote>
+          <cite><strong>Xulia M.</strong> — autónoma, comercio textil</cite>
+        </li>
+        <li class="testimonio">
+          <blockquote><p>«Montamos la sociedad en tres semanas y con todo explicado. Cero sorpresas en la primera declaración.»</p></blockquote>
+          <cite><strong>Ramón F.</strong> — socio, taller de carpintería</cite>
+        </li>
+        <li class="testimonio">
+          <blockquote><p>«Son los primeros que me han hecho entender qué modelo estaba presentando y por qué. Se nota.»</p></blockquote>
+          <cite><strong>Sabela C.</strong> — hostelería</cite>
+        </li>
+        <li class="testimonio">
+          <blockquote><p>«El calendario de plazos que mandan cada trimestre me ha salvado de más de un disgusto con Hacienda.»</p></blockquote>
+          <cite><strong>Brais L.</strong> — construcción y reformas</cite>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     4 · CALENDARIO FISCAL — tabla de casillas
+     ====================================================================== -->
+<section id="calendario">
+  <div class="contenedor">
+    <p class="etiqueta-mono">Casilla 06</p>
+    <h2 class="titulo-seccion titular" data-char>El calendario, <em>marcado</em> con antelación</h2>
+    <p class="parrafo-intro">Los plazos generales del año fiscal. La fila señalada como «próxima» y los días que quedan se calculan con la fecha de hoy, no están escritos a mano.</p>
+
+    <div class="calendario-tabla-envoltorio" tabindex="0" role="group" aria-label="Calendario fiscal, tabla con desplazamiento horizontal en pantallas pequeñas" data-tabla-desborda>
+      <table class="calendario-tabla" data-calendario>
+        <thead>
+          <tr><th>Mes</th><th>Trámite</th><th>Modelos</th><th>Plazo</th><th>Días</th></tr>
+        </thead>
+        <tbody>
+          <tr data-mes="1" data-dia="31"><td class="calendario-mes">Enero</td><td>Resumen anual de retenciones</td><td class="calendario-modelos">111 · 190</td><td>1 – 31 de enero</td><td class="calendario-dias tab-nums" data-dias></td></tr>
+          <tr data-mes="1" data-dia="30"><td class="calendario-mes">Enero</td><td>IVA del 4º trimestre + resumen anual</td><td class="calendario-modelos">303 · 390</td><td>1 – 30 de enero</td><td class="calendario-dias tab-nums" data-dias></td></tr>
+          <tr data-mes="4" data-dia="20"><td class="calendario-mes">Abril</td><td>IVA e IRPF, 1er trimestre</td><td class="calendario-modelos">303 · 130 · 111</td><td>1 – 20 de abril</td><td class="calendario-dias tab-nums" data-dias></td></tr>
+          <tr data-mes="6" data-dia="30"><td class="calendario-mes">Junio</td><td>Cierre de la campaña de la Renta</td><td class="calendario-modelos">100</td><td>hasta el 30 de junio</td><td class="calendario-dias tab-nums" data-dias></td></tr>
+          <tr data-mes="7" data-dia="20"><td class="calendario-mes">Julio</td><td>IVA e IRPF, 2º trimestre</td><td class="calendario-modelos">303 · 130 · 111</td><td>1 – 20 de julio</td><td class="calendario-dias tab-nums" data-dias></td></tr>
+          <tr data-mes="7" data-dia="25"><td class="calendario-mes">Julio</td><td>Impuesto de Sociedades</td><td class="calendario-modelos">200</td><td>1 – 25 de julio</td><td class="calendario-dias tab-nums" data-dias></td></tr>
+          <tr data-mes="10" data-dia="20"><td class="calendario-mes">Octubre</td><td>IVA e IRPF, 3er trimestre</td><td class="calendario-modelos">303 · 130 · 111</td><td>1 – 20 de octubre</td><td class="calendario-dias tab-nums" data-dias></td></tr>
+          <tr data-mes="11" data-dia="20"><td class="calendario-mes">Noviembre</td><td>Pago fraccionado de Sociedades</td><td class="calendario-modelos">202</td><td>1 – 20 de noviembre</td><td class="calendario-dias tab-nums" data-dias></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="calendario-nota">Calendario general de referencia: los plazos concretos de cada cliente dependen de su actividad y régimen. Se lo confirmamos por escrito con cada trimestre.</p>
+  </div>
+</section>
+
+<!-- ======================================================================
+     5 · EQUIPO + POR QUÉ ELEGIRNOS (fusionadas)
+     ====================================================================== -->
+<section id="equipo" class="fondo-rejilla">
+  <div class="contenedor">
+    <p class="etiqueta-mono">Casilla 07</p>
+    <h2 class="titulo-seccion titular" data-char>Dos personas, <em>una sola mesa</em></h2>
+    <p class="parrafo-intro">Un despacho pequeño a propósito: para que quien firma sus cuentas sea quien contesta el teléfono.</p>
+
+    <div class="equipo-envoltorio">
+      <div class="equipo-personas">
+        <article class="persona" data-reveal>
+          <div class="persona-retrato"><img src="assets/img/equipo-xoan.svg" width="200" height="200" alt="Ilustración de Xoán Vilas Pardo" loading="lazy"></div>
+          <p class="persona-nombre">Xoán Vilas Pardo</p>
+          <p class="persona-cargo">Socio director · Economista</p>
+          <p class="persona-bio">Lleva desde 2009 acompañando a negocios de la comarca de Ordes en cada casilla de su declaración. Cree que un impuesto bien explicado se paga mejor que uno mal reducido.</p>
+        </article>
+        <article class="persona" data-reveal>
+          <div class="persona-retrato"><img src="assets/img/equipo-noa.svg" width="200" height="200" alt="Ilustración de Noa Bugallo Seijas" loading="lazy"></div>
+          <p class="persona-nombre">Noa Bugallo Seijas</p>
+          <p class="persona-cargo">Socia · Graduada Social</p>
+          <p class="persona-bio">Antes de fundar el despacho llevó las nóminas de dos cooperativas agrarias de la zona. Sabe que un contrato mal casillado cuesta más disgustos que un impuesto.</p>
+        </article>
+      </div>
+
+      <div class="porque">
+        <p class="etiqueta-mono" style="margin-bottom:0.6rem">Por qué elegirnos</p>
+        <div class="porque-item" data-reveal>
+          <span class="porque-num tab-nums">01</span>
+          <div>
+            <p class="porque-titulo">Un solo interlocutor</p>
+            <p class="porque-texto">Fiscal, laboral y contable desde la misma mesa: no le pasamos de un departamento a otro.</p>
+          </div>
+        </div>
+        <div class="porque-item" data-reveal>
+          <span class="porque-num tab-nums">02</span>
+          <div>
+            <p class="porque-titulo">Respuesta en 24 horas hábiles</p>
+            <p class="porque-texto">Una consulta por teléfono o WhatsApp no debería esperar una semana. Aquí no espera.</p>
+          </div>
+        </div>
+        <div class="porque-item" data-reveal>
+          <span class="porque-num tab-nums">03</span>
+          <div>
+            <p class="porque-titulo">El calendario, explicado</p>
+            <p class="porque-texto">No solo cumplimos los plazos: le contamos qué casilla se marca y por qué, cada trimestre.</p>
+          </div>
+        </div>
+        <div class="porque-item" data-reveal>
+          <span class="porque-num tab-nums">04</span>
+          <div>
+            <p class="porque-titulo">Presencial o por videollamada</p>
+            <p class="porque-texto">Despacho en Ordes, con hueco para quien prefiere resolverlo todo sin desplazarse.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     6 · CONTACTO + PIE
+     ====================================================================== -->
+<section id="contacto">
+  <div class="contenedor">
+    <p class="etiqueta-mono">Casilla 08</p>
+    <h2 class="titulo-seccion titular" data-char>Última <em>casilla</em>: hablemos</h2>
+    <p class="parrafo-intro">Primera consulta sin coste, para ver si encajamos. Sin compromiso y sin letra pequeña.</p>
+
+    <div class="contacto-envoltorio">
+      <dl class="ficha-despacho casilla casilla-registro">
+        <div class="ficha-fila">
+          <dt>Despacho</dt>
+          <dd>Rúa Progreso, 22, 1º<br>15680 Ordes (A Coruña)</dd>
+        </div>
+        <div class="ficha-fila">
+          <dt>Teléfono</dt>
+          <dd><a href="tel:+34981000084">981 00 00 84</a></dd>
+        </div>
+        <div class="ficha-fila">
+          <dt>WhatsApp</dt>
+          <dd><a href="https://wa.me/34600000084" target="_blank" rel="noopener">600 00 00 84</a></dd>
+        </div>
+        <div class="ficha-fila">
+          <dt>Correo</dt>
+          <dd><a href="mailto:info@vilasybugallo.com">info@vilasybugallo.com</a></dd>
+        </div>
+        <div class="ficha-fila">
+          <dt>Horario</dt>
+          <dd>
+            <table class="ficha-horario">
+              <tr><th>Lun – Vie</th><td>9:00 – 14:00</td></tr>
+              <tr><th>Mar y Jue</th><td>16:00 – 19:00</td></tr>
+            </table>
+          </dd>
+        </div>
+      </dl>
+
+      <div class="mapa-caja casilla casilla-registro">
+        <div class="map-consent-envoltorio">
+          <button class="map-consent" type="button">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 10-14 0c0 5.8 7 12 7 12z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="1.6"/></svg>
+            <span>Ver el mapa</span>
+            <span class="map-consent-texto">El mapa carga un iframe de Google Maps solo cuando lo pide: hasta entonces no se conecta ninguna cookie de terceros.</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="pie">
+  <div class="contenedor">
+    <div class="pie-col">
+      <a href="#portada" class="pie-marca"><img src="assets/img/logo.svg" width="342" height="66" alt="Vilas & Bugallo Asesores"></a>
+      <p class="pie-marca-texto">Asesoría fiscal, laboral, contable y de sociedades en Ordes (A Coruña). Un despacho, un interlocutor, las casillas correctas en cada plazo.</p>
+    </div>
+    <div class="pie-col">
+      <h3>Secciones</h3>
+      <ul>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#confianza">Confianza</a></li>
+        <li><a href="#calendario">Calendario</a></li>
+        <li><a href="#equipo">Equipo</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="pie-col">
+      <h3>Despacho</h3>
+      <ul>
+        <li>Rúa Progreso, 22, 1º</li>
+        <li>15680 Ordes (A Coruña)</li>
+        <li><a href="tel:+34981000084">981 00 00 84</a></li>
+        <li><a href="mailto:info@vilasybugallo.com">info@vilasybugallo.com</a></li>
+      </ul>
+    </div>
+
+    <div class="pie-legal">
+      <div class="pie-demo">
+        <strong>Sitio de demostración.</strong> Vilas &amp; Bugallo Asesores es un negocio ficticio; los datos, fotografías y opiniones son de muestra, pensados para mostrar esta plantilla de la biblioteca de WEBS NEGOCIOS.
+      </div>
+      <div class="pie-enlaces-legales">
+        <span>© <span data-anio>2026</span> Vilas &amp; Bugallo Asesores</span>
+        <a href="aviso-legal.html">Aviso legal</a>
+        <a href="privacidad.html">Privacidad y cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ======================================================================
+     Aviso de cookies — el botón cierra de verdad: el display:flex está en
+     .cookie-banner:not([hidden]) del CSS, nunca en .cookie-banner a secas
+     ====================================================================== -->
+<div class="cookie-banner" hidden role="dialog" aria-label="Aviso de cookies">
+  <p>Usamos únicamente cookies técnicas para recordar que ya ha visto este aviso. El mapa solo carga cookies de Google si usted pulsa «Ver el mapa». Más información en la <a href="privacidad.html">política de privacidad</a>.</p>
+  <div class="cookie-acciones">
+    <button class="boton boton-primario cookie-ack" type="button">De acuerdo</button>
+  </div>
+</div>
+
+<a class="whatsapp-flotante" href="https://wa.me/34600000084" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp a Vilas & Bugallo Asesores" data-magnetic>
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.6.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.2-.4.1-.1 0-.3 0-.4-.1-.1-.6-1.5-.8-2-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1112 20.2z"/></svg>
+  <span class="solo-sr">Escribir por WhatsApp</span>
+</a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

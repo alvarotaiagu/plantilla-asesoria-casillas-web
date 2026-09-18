@@ -1,0 +1,359 @@
+{
+ "fecha": "2026-09-18T22:00:32.759Z",
+ "base": "http://127.0.0.1:8973/",
+ "total": 46,
+ "fallos": 0,
+ "pruebas": [
+  {
+   "prueba": "cortina: arranca cubriendo la pantalla",
+   "ok": true,
+   "detalle": null
+  },
+  {
+   "prueba": "cortina: se retira sola (queda hidden=true)",
+   "ok": true,
+   "detalle": null
+  },
+  {
+   "prueba": "cortina: la clase cortina-puesta se quita al retirarse",
+   "ok": true,
+   "detalle": null
+  },
+  {
+   "prueba": "portada: las casillas del impreso se marcan solas al abrirse la cortina",
+   "ok": true,
+   "detalle": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ]
+  },
+  {
+   "prueba": "cookies: el botón cierra de verdad (display:none, no solo [hidden])",
+   "ok": true,
+   "detalle": {
+    "hidden": true,
+    "display": "none"
+   }
+  },
+  {
+   "prueba": "portada: el titular con char-reveal ha terminado de entrar",
+   "ok": true,
+   "detalle": {
+    "n": 35,
+    "visibles": 35
+   }
+  },
+  {
+   "prueba": "servicios: las cuatro casillas numeradas se han marcado",
+   "ok": true,
+   "detalle": [
+    true,
+    true,
+    true,
+    true
+   ]
+  },
+  {
+   "prueba": "titulares: todos los data-char han revelado sus letras",
+   "ok": true,
+   "detalle": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ]
+  },
+  {
+   "prueba": "calendario: las ocho filas tienen un número de días calculado",
+   "ok": true,
+   "detalle": {
+    "n": 8,
+    "dias": [
+     "135",
+     "134",
+     "214",
+     "285",
+     "305",
+     "310",
+     "32",
+     "63"
+    ],
+    "proximas": 1,
+    "todasNumericas": true
+   }
+  },
+  {
+   "prueba": "calendario: exactamente una fila marcada como \"próxima\"",
+   "ok": true,
+   "detalle": {
+    "n": 8,
+    "dias": [
+     "135",
+     "134",
+     "214",
+     "285",
+     "305",
+     "310",
+     "32",
+     "63"
+    ],
+    "proximas": 1,
+    "todasNumericas": true
+   }
+  },
+  {
+   "prueba": "contadores: han llegado a su valor final",
+   "ok": true,
+   "detalle": {
+    "anios": "17",
+    "nota": "4,8",
+    "respuestas": "36"
+   }
+  },
+  {
+   "prueba": "margen lateral: el relleno de progreso se ha movido con el scroll",
+   "ok": true,
+   "detalle": "0%"
+  },
+  {
+   "prueba": "sin errores de consola ni peticiones fallidas",
+   "ok": true,
+   "detalle": []
+  },
+  {
+   "prueba": "mapa: no se carga ningún iframe hasta el clic",
+   "ok": true,
+   "detalle": 0
+  },
+  {
+   "prueba": "mapa: tras el clic aparece el embed de Google sin API key",
+   "ok": true,
+   "detalle": "https://www.google.com/maps?q=Vilas%20y%20Bugallo%20Asesores%2C%20R%C3%BAa%20Progreso%2022%2C%2015680%20Ordes%2C%20A%20Coru%C3%B1a&output=embed"
+  },
+  {
+   "prueba": "menú móvil: cerrado al empezar",
+   "ok": true,
+   "detalle": {
+    "expanded": "false",
+    "hidden": true
+   }
+  },
+  {
+   "prueba": "menú móvil: se abre y marca aria-expanded",
+   "ok": true,
+   "detalle": {
+    "expanded": "true",
+    "hidden": false
+   }
+  },
+  {
+   "prueba": "menú móvil: se cierra de nuevo",
+   "ok": true,
+   "detalle": null
+  },
+  {
+   "prueba": "reduced-motion: no se activa la coreografía (has-motion apagado)",
+   "ok": true,
+   "detalle": false
+  },
+  {
+   "prueba": "reduced-motion: la cortina no se queda tapando la página",
+   "ok": true,
+   "detalle": false
+  },
+  {
+   "prueba": "reduced-motion: el titular se lee igualmente (sin split de letras)",
+   "ok": true,
+   "detalle": true
+  },
+  {
+   "prueba": "reduced-motion: el impreso de la portada se ve ya relleno (es contenido, no movimiento)",
+   "ok": true,
+   "detalle": true
+  },
+  {
+   "prueba": "reduced-motion: los contadores muestran su valor final",
+   "ok": true,
+   "detalle": "17"
+  },
+  {
+   "prueba": "reduced-motion: el calendario sigue calculando los días (contenido, no movimiento)",
+   "ok": true,
+   "detalle": [
+    "135",
+    "134",
+    "214",
+    "285",
+    "305",
+    "310",
+    "32",
+    "63"
+   ]
+  },
+  {
+   "prueba": "sin CDN: no se activa has-motion y la cortina no tapa nada",
+   "ok": true,
+   "detalle": {
+    "hasMotion": false,
+    "cortinaTapando": false,
+    "impreso": true,
+    "contador": "17",
+    "titularLegible": true,
+    "cuerpoVisible": true
+   }
+  },
+  {
+   "prueba": "sin CDN: la página se lee entera (impreso relleno, titular legible, cuerpo con contenido)",
+   "ok": true,
+   "detalle": {
+    "hasMotion": false,
+    "cortinaTapando": false,
+    "impreso": true,
+    "contador": "17",
+    "titularLegible": true,
+    "cuerpoVisible": true
+   }
+  },
+  {
+   "prueba": "sin CDN: los contadores muestran ya su valor final",
+   "ok": true,
+   "detalle": "17"
+  },
+  {
+   "prueba": "responsive movil-400: sin scroll horizontal",
+   "ok": true,
+   "detalle": {
+    "scrollW": 400,
+    "clientW": 400
+   }
+  },
+  {
+   "prueba": "responsive movil-400: la tabla del calendario desborda y es accesible con teclado",
+   "ok": true,
+   "detalle": {
+    "desborda": true,
+    "tabindex": "0",
+    "role": "group"
+   }
+  },
+  {
+   "prueba": "responsive movil-390: sin scroll horizontal",
+   "ok": true,
+   "detalle": {
+    "scrollW": 390,
+    "clientW": 390
+   }
+  },
+  {
+   "prueba": "responsive movil-390: la tabla del calendario desborda y es accesible con teclado",
+   "ok": true,
+   "detalle": {
+    "desborda": true,
+    "tabindex": "0",
+    "role": "group"
+   }
+  },
+  {
+   "prueba": "responsive tablet-820: sin scroll horizontal",
+   "ok": true,
+   "detalle": {
+    "scrollW": 820,
+    "clientW": 820
+   }
+  },
+  {
+   "prueba": "responsive tablet-820: la tabla del calendario desborda y es accesible con teclado",
+   "ok": true,
+   "detalle": {
+    "desborda": true,
+    "tabindex": "0",
+    "role": "group"
+   }
+  },
+  {
+   "prueba": "datos de muestra presentes en la página",
+   "ok": true,
+   "detalle": []
+  },
+  {
+   "prueba": "sin marcadores sin sustituir ([PENDIENTE], TODO en mayúsculas, lorem ipsum)",
+   "ok": true,
+   "detalle": []
+  },
+  {
+   "prueba": "sello de demo en el footer",
+   "ok": true,
+   "detalle": null
+  },
+  {
+   "prueba": "sello de demo como comentario HTML en index.html",
+   "ok": true,
+   "detalle": null
+  },
+  {
+   "prueba": "meta robots noindex,nofollow",
+   "ok": true,
+   "detalle": null
+  },
+  {
+   "prueba": "schema.org sin aggregateRating ni review (línea roja del pliego)",
+   "ok": true,
+   "detalle": null
+  },
+  {
+   "prueba": "teléfono de muestra con el patrón 981 00 00 XX",
+   "ok": true,
+   "detalle": null
+  },
+  {
+   "prueba": "reseñas: solo nombre de pila + inicial, nunca atribuidas a una plataforma",
+   "ok": true,
+   "detalle": [
+    "Xulia M. — autónoma, comercio textil",
+    "Ramón F. — socio, taller de carpintería",
+    "Sabela C. — hostelería",
+    "Brais L. — construcción y reformas"
+   ]
+  },
+  {
+   "prueba": "Manrope cubre €, ñ y tildes",
+   "ok": true,
+   "detalle": {
+    "euro": true,
+    "ene": true,
+    "tildes": true
+   }
+  },
+  {
+   "prueba": "JetBrains Mono cubre €, ñ y tildes",
+   "ok": true,
+   "detalle": {
+    "euro": true,
+    "ene": true,
+    "tildes": true
+   }
+  },
+  {
+   "prueba": "404: página propia con el mismo lenguaje visual",
+   "ok": true,
+   "detalle": null
+  },
+  {
+   "prueba": "aviso legal: existe y lleva el sello de demo",
+   "ok": true,
+   "detalle": null
+  },
+  {
+   "prueba": "privacidad: existe y explica cookies y mapa",
+   "ok": true,
+   "detalle": null
+  }
+ ]
+}
