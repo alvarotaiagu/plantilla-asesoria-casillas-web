@@ -68,34 +68,41 @@
   })();
 
   /* ---------------- El control de paleta ----------------
-     NO ES PARTE DEL SITIO. Es un mando para enseñar la misma web en tres
-     paletas de color delante del cliente mientras decide. Al entregar la
-     web ya como oficial se borra esta función, el bloque .paleta del CSS,
-     el <div id="paleta"> y la bandera del <head>. */
+     NO ES PARTE DEL SITIO. Es un mando para enseñar la misma web en cuatro
+     paletas de color delante del cliente mientras decide. "teja" (el rojo
+     real de Dourado & Fernández) es el estado por defecto, sin clase, para
+     el envío comparativo de las 7 plantillas de asesoría/gestoría;
+     "original" recupera el petróleo nativo de esta plantilla. Al entregar
+     la web ya como oficial se borra esta función, el bloque .paleta del
+     CSS, el <div id="paleta"> y la bandera del <head>. */
   (function initPaleta() {
     var caja = document.getElementById("paleta");
     var botones = {
-      petroleo: document.getElementById("paleta-petroleo"),
+      teja: document.getElementById("paleta-teja"),
+      original: document.getElementById("paleta-original"),
       anil: document.getElementById("paleta-anil"),
       siena: document.getElementById("paleta-siena")
     };
-    if (!caja || !botones.petroleo || !botones.anil || !botones.siena) return;
+    if (!caja || !botones.teja || !botones.original || !botones.anil || !botones.siena) return;
     var CLAVE_PALETA = "casillas-paleta";
 
     caja.hidden = false; // sin JS no se enseña: no haría nada
 
     function pintar(nombre, guardar) {
-      html.classList.remove("paleta-anil", "paleta-siena");
-      if (nombre !== "petroleo") html.classList.add("paleta-" + nombre);
+      html.classList.remove("paleta-original", "paleta-anil", "paleta-siena");
+      if (nombre !== "teja") html.classList.add("paleta-" + nombre);
       Object.keys(botones).forEach(function (k) {
         botones[k].setAttribute("aria-pressed", String(k === nombre));
       });
       if (guardar) { try { localStorage.setItem(CLAVE_PALETA, nombre); } catch (e) {} }
     }
 
-    var actual = html.classList.contains("paleta-anil") ? "anil" : html.classList.contains("paleta-siena") ? "siena" : "petroleo";
+    var actual = html.classList.contains("paleta-original") ? "original" :
+      html.classList.contains("paleta-anil") ? "anil" :
+      html.classList.contains("paleta-siena") ? "siena" : "teja";
     pintar(actual, false);
-    botones.petroleo.addEventListener("click", function () { pintar("petroleo", true); });
+    botones.teja.addEventListener("click", function () { pintar("teja", true); });
+    botones.original.addEventListener("click", function () { pintar("original", true); });
     botones.anil.addEventListener("click", function () { pintar("anil", true); });
     botones.siena.addEventListener("click", function () { pintar("siena", true); });
   })();

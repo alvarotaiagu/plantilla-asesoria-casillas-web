@@ -60,3 +60,18 @@ for (let t = 0; t <= 0.5; t += 0.05) {
   const c = mix(PETROLEO, '#000000', t);
   console.log('t=' + t.toFixed(2), c, contrast(c, PAPEL).toFixed(2));
 }
+
+/* --- control de paleta (demostración, ver README "El control de paleta") -
+   Dourado & Fernández es ahora el valor por defecto en :root (bare, sin
+   clase); "Original" es el petróleo nativo de arriba, movido a la clase
+   .paleta-original. No se asume que el ratio de Dourado se herede por ser
+   un rojo parecido: se recalcula aquí con sus hexadecimales reales. */
+console.log('\n--- control de paleta: blanco/relleno (target >=5.76) y oscura/papel (target >=6.74) ---');
+console.log('Teja (Dourado & Fernández, por defecto)  blanco/#9C2A2E =', contrast(BLANCO, '#9C2A2E').toFixed(2),
+  '  #7A1418/papel =', contrast('#7A1418', PAPEL).toFixed(2));
+console.log('Original (petróleo nativo)               blanco/#3E6E6B =', contrast(BLANCO, '#3E6E6B').toFixed(2),
+  '  #2F5350/papel =', contrast('#2F5350', PAPEL).toFixed(2));
+console.log('Añil                                      blanco/#2C4A76 =', contrast(BLANCO, '#2C4A76').toFixed(2),
+  '  #1F3554/papel =', contrast('#1F3554', PAPEL).toFixed(2));
+console.log('Siena                                     blanco/#8A4A28 =', contrast(BLANCO, '#8A4A28').toFixed(2),
+  '  #6B3A1F/papel =', contrast('#6B3A1F', PAPEL).toFixed(2));

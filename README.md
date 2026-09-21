@@ -110,14 +110,28 @@ siguen funcionando aunque el CDN de GSAP esté caído.
 
 ## El control de paleta (demostración, quitar antes de dar la web por oficial)
 
-Mando flotante abajo a la izquierda (`Paleta · Petróleo / Añil / Siena`) para
-enseñar la misma web con tres colores de marca distintos delante del cliente,
-sin tener que retocar CSS en directo durante la reunión. Nació el
-2026-09-21, tras una reunión real con otro cliente del sector (Dourado &
-Fernández) que rechazó el verde de su plantilla; ahora es requisito estándar
-del pliego (§5, «Control de paleta») para todas las plantillas de la carpeta.
+Mando flotante abajo a la izquierda (`Paleta · Teja / Original / Añil /
+Siena`) para enseñar la misma web con cuatro colores de marca distintos
+delante del cliente, sin tener que retocar CSS en directo durante la
+reunión. Nació el 2026-09-21, tras una reunión real con otro cliente del
+sector (Dourado & Fernández) que rechazó el verde de su plantilla; ahora es
+requisito estándar del pliego (§5, «Control de paleta») para todas las
+plantillas de la carpeta.
 
-- **Petróleo** `#3E6E6B` / `#2F5350` — la paleta real de esta plantilla.
+**Actualización del mismo día:** Dourado & Fernández ya tiene su propia web
+en su rojo real (`dourado-fernandez-asesores-carballo-web`), y esa misma
+plantilla —junto con las otras 6 de asesoría/gestoría de la carpeta,
+incluida esta— se va a enviar por email al cliente para que compare
+ESTRUCTURA, no color. Por eso el rojo de Dourado & Fernández ("Teja" en el
+mando) pasa a ser el valor por defecto en frío (sin nada en `localStorage`):
+las 7 plantillas llegan ya en "su" color, y el color deja de ser una
+variable en la comparación. El petróleo nativo de esta plantilla no
+desaparece: se convierte en la opción "Original".
+
+- **Teja** `#9C2A2E` / `#7A1418` — el rojo real de Dourado & Fernández (su
+  `--oro` / `--oro-tinta`); **por defecto, sin clase, en frío**.
+- **Original** `#3E6E6B` / `#2F5350` — el petróleo nativo de esta plantilla,
+  ahora accesible con la clase `html.paleta-original`.
 - **Añil** `#2C4A76` / `#1F3554` — tinta añil, la que se usaba para sellos y
   matasellos oficiales.
 - **Siena** `#8A4A28` / `#6B3A1F` — tierra de sombra tostada, tono de archivo
@@ -125,25 +139,35 @@ del pliego (§5, «Control de paleta») para todas las plantillas de la carpeta.
 
 Solo cambian `--petroleo` y `--petroleo-oscuro` (y, con ellos, `--texto-acento`,
 que deriva del segundo por `var()`); el papel, el grafito y el texto son
-idénticos en las tres, así que ninguna variante se ve "lavada". Cada variante
-mantiene el mismo contraste mínimo comprobado con `scripts/contrast.js`: el
-color de relleno frente a `--blanco` ≥5,76:1, y la variante oscura como texto
-sobre `--papel` ≥6,74:1. La elección se recuerda en
-`localStorage` (`casillas-paleta`) y se aplica en el `<head>`, antes de
-pintar, para que no haya parpadeo al recargar. El mando nunca tapa el aviso
-de cookies: `js/main.js` mide el alto real del aviso mientras está abierto y
-lo guarda en la variable `--cookie-h`, que el mando usa para subir por
-encima de él.
+idénticos en las cuatro, así que ninguna variante se ve "lavada". Cada
+variante mantiene el mismo contraste mínimo comprobado con
+`scripts/contrast.js` para su propio hexadecimal (nunca asumido por
+parecido): el color de relleno frente a `--blanco` ≥5,76:1, y la variante
+oscura como texto sobre `--papel` ≥6,74:1 — Teja da 7,54:1 y 8,59:1. La
+elección se recuerda en `localStorage` (`casillas-paleta`) y se aplica en
+el `<head>`, antes de pintar, para que no haya parpadeo al recargar. El
+mando nunca tapa el aviso de cookies: `js/main.js` mide el alto real del
+aviso mientras está abierto y lo guarda en la variable `--cookie-h`, que el
+mando usa para subir por encima de él.
 
-Para quitarlo al entregar la web ya como oficial:
+Esquema de clases: **Teja** es el estado "bare" de `:root` (sin clase, es
+el que se ve en frío sin `localStorage`); **Original**, **Añil** y **Siena**
+son las tres clases explícitas (`html.paleta-original` /
+`html.paleta-anil` / `html.paleta-siena`).
+
+Para quitarlo al entregar la web ya como oficial (y devolver `--petroleo` /
+`--petroleo-oscuro` de `:root` al petróleo nativo `#3E6E6B` / `#2F5350` si
+el cliente final es esta plantilla y no Dourado & Fernández):
 
 1. En `index.html`: el bloque `<script>` del `<head>` que resuelve
    `casillas-paleta` (justo antes de `</head>`) y el bloque
    `<div class="paleta" id="paleta" hidden>...</div>` (antes del botón de
    WhatsApp flotante).
-2. En `css/style.css`: el bloque `html.paleta-anil` / `html.paleta-siena`
-   justo después de `:root`, y el bloque «Control de paleta» junto a las
-   reglas de `.whatsapp-flotante`. La variable `--cookie-h` de `:root` puede
+2. En `css/style.css`: los valores de `--petroleo` / `--petroleo-oscuro` en
+   `:root` (volver a `#3E6E6B` / `#2F5350` si procede), el bloque
+   `html.paleta-original` / `html.paleta-anil` / `html.paleta-siena` justo
+   después de `:root`, y el bloque «Control de paleta» junto a las reglas
+   de `.whatsapp-flotante`. La variable `--cookie-h` de `:root` puede
    quedarse (no hace nada por sí sola) o borrarse también.
 3. En `js/main.js`: la función `initPaleta()` completa, y el añadido de
    `--cookie-h` dentro de `avisoCookies()` (puede simplificarse de vuelta a

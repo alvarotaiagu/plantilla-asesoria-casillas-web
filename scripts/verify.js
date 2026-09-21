@@ -376,25 +376,44 @@ async function recorrer(p, paso = 500, espera = 130) {
       const cs = getComputedStyle(document.documentElement);
       return {
         visible: document.getElementById('paleta').hidden === false,
-        pressed: document.getElementById('paleta-petroleo').getAttribute('aria-pressed'),
+        pressed: document.getElementById('paleta-teja').getAttribute('aria-pressed'),
+        sinClase: !document.documentElement.classList.contains('paleta-original') &&
+          !document.documentElement.classList.contains('paleta-anil') &&
+          !document.documentElement.classList.contains('paleta-siena'),
         petroleo: cs.getPropertyValue('--petroleo').trim()
       };
     });
-    ok('paleta: el mando aparece con JS y arranca en Petróleo',
-      inicial.visible && inicial.pressed === 'true' && inicial.petroleo.toLowerCase() === '#3e6e6b', inicial);
+    ok('paleta: el mando aparece con JS y arranca en frío en el rojo de Dourado & Fernández (Teja), sin localStorage',
+      inicial.visible && inicial.pressed === 'true' && inicial.sinClase &&
+      inicial.petroleo.toLowerCase() === '#9c2a2e', inicial);
+
+    await p.click('#paleta-original');
+    const original = await p.evaluate(() => ({
+      clase: document.documentElement.classList.contains('paleta-original'),
+      pressed: {
+        teja: document.getElementById('paleta-teja').getAttribute('aria-pressed'),
+        original: document.getElementById('paleta-original').getAttribute('aria-pressed')
+      },
+      petroleoVar: getComputedStyle(document.documentElement).getPropertyValue('--petroleo').trim(),
+      guardado: (() => { try { return localStorage.getItem('casillas-paleta'); } catch (e) { return null; } })()
+    }));
+    ok('paleta: Original recupera el petróleo nativo de la plantilla y marca aria-pressed',
+      original.clase && original.pressed.original === 'true' && original.pressed.teja === 'false' &&
+      original.petroleoVar.toLowerCase() === '#3e6e6b' && original.guardado === 'original', original);
 
     await p.click('#paleta-anil');
     const anil = await p.evaluate(() => ({
       clase: document.documentElement.classList.contains('paleta-anil'),
+      claseOriginalFuera: !document.documentElement.classList.contains('paleta-original'),
       pressed: {
-        petroleo: document.getElementById('paleta-petroleo').getAttribute('aria-pressed'),
+        original: document.getElementById('paleta-original').getAttribute('aria-pressed'),
         anil: document.getElementById('paleta-anil').getAttribute('aria-pressed')
       },
       petroleoVar: getComputedStyle(document.documentElement).getPropertyValue('--petroleo').trim(),
       guardado: (() => { try { return localStorage.getItem('casillas-paleta'); } catch (e) { return null; } })()
     }));
     ok('paleta: Añil cambia la variable --petroleo en vivo y marca aria-pressed',
-      anil.clase && anil.pressed.anil === 'true' && anil.pressed.petroleo === 'false' &&
+      anil.clase && anil.claseOriginalFuera && anil.pressed.anil === 'true' && anil.pressed.original === 'false' &&
       anil.petroleoVar.toLowerCase() === '#2c4a76' && anil.guardado === 'anil', anil);
 
     await p.click('#paleta-siena');
@@ -411,12 +430,13 @@ async function recorrer(p, paso = 500, espera = 130) {
        la imagen pilla el fotograma a medio camino entre colores */
     await p.waitForTimeout(300);
     const pulsados = await p.evaluate(() => ({
-      petroleo: document.getElementById('paleta-petroleo').getAttribute('aria-pressed'),
+      teja: document.getElementById('paleta-teja').getAttribute('aria-pressed'),
+      original: document.getElementById('paleta-original').getAttribute('aria-pressed'),
       anil: document.getElementById('paleta-anil').getAttribute('aria-pressed'),
       siena: document.getElementById('paleta-siena').getAttribute('aria-pressed')
     }));
     ok('paleta: solo el botón activo (Siena) queda marcado como pulsado',
-      pulsados.petroleo === 'false' && pulsados.anil === 'false' && pulsados.siena === 'true', pulsados);
+      pulsados.teja === 'false' && pulsados.original === 'false' && pulsados.anil === 'false' && pulsados.siena === 'true', pulsados);
     await p.screenshot({ path: path.join(CAPS, 'v-paleta-siena.png') });
 
     /* recarga: la paleta guardada se aplica sin parpadeo, antes de que

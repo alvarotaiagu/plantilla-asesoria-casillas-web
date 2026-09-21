@@ -1,7 +1,7 @@
 {
- "fecha": "2026-09-21T12:43:15.349Z",
- "base": "http://127.0.0.1:8973/",
- "total": 54,
+ "fecha": "2026-09-21T13:29:34.387Z",
+ "base": "http://127.0.0.1:8137/",
+ "total": 55,
  "fallos": 0,
  "pruebas": [
   {
@@ -356,12 +356,26 @@
    "detalle": null
   },
   {
-   "prueba": "paleta: el mando aparece con JS y arranca en Petróleo",
+   "prueba": "paleta: el mando aparece con JS y arranca en frío en el rojo de Dourado & Fernández (Teja), sin localStorage",
    "ok": true,
    "detalle": {
     "visible": true,
     "pressed": "true",
-    "petroleo": "#3E6E6B"
+    "sinClase": true,
+    "petroleo": "#9C2A2E"
+   }
+  },
+  {
+   "prueba": "paleta: Original recupera el petróleo nativo de la plantilla y marca aria-pressed",
+   "ok": true,
+   "detalle": {
+    "clase": true,
+    "pressed": {
+     "teja": "false",
+     "original": "true"
+    },
+    "petroleoVar": "#3E6E6B",
+    "guardado": "original"
    }
   },
   {
@@ -369,8 +383,9 @@
    "ok": true,
    "detalle": {
     "clase": true,
+    "claseOriginalFuera": true,
     "pressed": {
-     "petroleo": "false",
+     "original": "false",
      "anil": "true"
     },
     "petroleoVar": "#2C4A76",
@@ -391,7 +406,8 @@
    "prueba": "paleta: solo el botón activo (Siena) queda marcado como pulsado",
    "ok": true,
    "detalle": {
-    "petroleo": "false",
+    "teja": "false",
+    "original": "false",
     "anil": "false",
     "siena": "true"
    }
@@ -422,10 +438,10 @@
     "paleta": {
      "x": 14.390625,
      "y": 562.96875,
-     "width": 218.015625,
+     "width": 274.234375,
      "height": 44.640625,
      "top": 562.96875,
-     "right": 232.40625,
+     "right": 288.625,
      "bottom": 607.609375,
      "left": 14.390625
     },

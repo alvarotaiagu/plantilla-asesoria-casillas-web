@@ -17,17 +17,27 @@
   --papel-panel: #DEDCD5;      /* un paso más oscuro, para paneles sobre papel */
   --grafito: #2B2E33;
   --grafito-panel: #23262B;    /* un paso más oscuro que grafito, para fondos oscuros */
-  --petroleo: #3E6E6B;
-  --petroleo-oscuro: #2F5350;  /* petróleo oscurecido: 6.74:1 sobre papel (ver contrast.js) */
+  /* --petroleo/--petroleo-oscuro: DEMOSTRACIÓN — valor por defecto puesto
+     temporalmente al rojo real de Dourado & Fernández (oro/oro-tinta de su
+     propia plantilla) para el envío comparativo de las 7 plantillas de
+     asesoría/gestoría: así el cliente compara ESTRUCTURA, no color, porque
+     las 7 llegan ya en "su" rojo. El petróleo nativo de esta plantilla no
+     desaparece: sigue disponible como opción "Original" (ver bloque
+     "Control de paleta" más abajo). Contraste recalculado con
+     scripts/contrast.js para estos hexadecimales concretos (no se asume
+     que el ratio de Dourado se herede solo por ser un rojo parecido):
+     blanco sobre --petroleo = 7.54:1, --petroleo-oscuro sobre papel = 8.59:1. */
+  --petroleo: #9C2A2E;
+  --petroleo-oscuro: #7A1418;  /* como texto sobre papel: 8.59:1 (ver contrast.js) */
   --blanco: #FFFFFF;
 
   /* texto: cada apagado lleva su contraste medido con contrast.js ------- */
   --texto: var(--grafito);                 /* 10.82:1 sobre papel */
   --texto-apagado: #636567;                /* 4.65:1 sobre papel */
-  --texto-sobre-petroleo: var(--blanco);   /* 5.76:1 sobre petróleo */
+  --texto-sobre-petroleo: var(--blanco);   /* 7.54:1 sobre petroleo (Dourado) */
   --texto-sobre-grafito: var(--papel);     /* 10.82:1 sobre grafito */
   --texto-apagado-sobre-grafito: #9C9C9A;  /* 4.95:1 sobre grafito */
-  --texto-acento: var(--petroleo-oscuro);  /* petróleo como TEXTO (no como marca): 6.74:1 */
+  --texto-acento: var(--petroleo-oscuro);  /* petróleo como TEXTO (no como marca): 8.59:1 */
 
   --borde: #B9B6AC;
   --borde-fuerte: var(--grafito);
@@ -50,12 +60,22 @@
 /* -------------------------- Control de paleta --------------------------
    BLOQUE DE DEMOSTRACIÓN: se borra entero al entregar la web ya como
    oficial (ver README, "El control de paleta"). Solo cambia el color de
-   marca — el papel, el grafito y el texto son los mismos en las tres, y el
-   logo real no cambia de color con el mando. Contraste comprobado con
-   scripts/contrast.js: blanco sobre el color de relleno ≥5.76:1, y la
-   variante oscura como texto sobre papel ≥6.74:1, igual que el petróleo
-   real (--texto-acento toma la variante oscura por var(), así que sigue
-   el cambio de paleta sola). */
+   marca — el papel, el grafito y el texto son los mismos en las cuatro, y
+   el logo real no cambia de color con el mando. Contraste comprobado con
+   scripts/contrast.js para cada hexadecimal concreto (nunca asumido por
+   parecido): blanco sobre el color de relleno ≥5.76:1, y la variante
+   oscura como texto sobre papel ≥6.74:1 (--texto-acento toma la variante
+   oscura por var(), así que sigue el cambio de paleta sola).
+
+   El bare :root de arriba ya NO es el petróleo nativo de esta plantilla:
+   es el rojo real de Dourado & Fernández, puesto como valor por defecto
+   para el envío comparativo de las 7 plantillas de asesoría/gestoría (ver
+   nota junto a --petroleo en :root). El petróleo nativo se recupera con
+   la clase .paleta-original de aquí abajo. */
+html.paleta-original {
+  --petroleo: #3E6E6B; --petroleo-oscuro: #2F5350;  /* petróleo nativo de esta plantilla:
+    blanco/petroleo 5.76:1, petroleo-oscuro/papel 6.74:1 (ver contrast.js) */
+}
 html.paleta-anil {
   --petroleo: #2C4A76; --petroleo-oscuro: #1F3554;
 }
