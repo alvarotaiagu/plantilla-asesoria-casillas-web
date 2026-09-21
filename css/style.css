@@ -13,8 +13,16 @@
 
 :root {
   /* paleta ------------------------------------------------------------- */
-  --papel: #E7E5DF;
-  --papel-panel: #DEDCD5;      /* un paso más oscuro, para paneles sobre papel */
+  /* --papel/--papel-panel: DEMOSTRACIÓN — puestos temporalmente al papel
+     blanco real de Dourado & Fernández (#FFFFFF), no solo su rojo, para que
+     el envío comparativo enseñe una vista fiel de "tu web con tus colores
+     exactos" y no el acento de Dourado sobre un gris que no es el suyo. El
+     papel gris nativo de esta plantilla sigue disponible en Original, Añil
+     y Siena (ver bloque "Control de paleta" más abajo). Contraste
+     recalculado con scripts/contrast.js contra el blanco real (no se asume
+     que mejore solo por ser más claro). */
+  --papel: #FFFFFF;
+  --papel-panel: #F2F0EA;      /* gris cálido casi blanco, un paso por debajo del papel, para paneles */
   --grafito: #2B2E33;
   --grafito-panel: #23262B;    /* un paso más oscuro que grafito, para fondos oscuros */
   /* --petroleo/--petroleo-oscuro: DEMOSTRACIÓN — valor por defecto puesto
@@ -31,13 +39,17 @@
   --petroleo-oscuro: #7A1418;  /* como texto sobre papel: 8.59:1 (ver contrast.js) */
   --blanco: #FFFFFF;
 
-  /* texto: cada apagado lleva su contraste medido con contrast.js ------- */
-  --texto: var(--grafito);                 /* 10.82:1 sobre papel */
-  --texto-apagado: #636567;                /* 4.65:1 sobre papel */
+  /* texto: cada apagado lleva su contraste medido con contrast.js -------
+     Los ratios de abajo son los del papel blanco de Teja (bare :root, el
+     que se ve en frío); sobre el papel gris nativo de Original/Añil/Siena
+     son algo más bajos pero siguen pasando (10.82:1 / 4.65:1 / 8.59:1, ver
+     comentarios previos a la demostración y scripts/contrast.js). */
+  --texto: var(--grafito);                 /* 13.62:1 sobre papel blanco (10.82:1 en Original/Añil/Siena) */
+  --texto-apagado: #636567;                /* 5.85:1 sobre papel blanco (4.65:1 en Original/Añil/Siena) */
   --texto-sobre-petroleo: var(--blanco);   /* 7.54:1 sobre petroleo (Dourado) */
-  --texto-sobre-grafito: var(--papel);     /* 10.82:1 sobre grafito */
+  --texto-sobre-grafito: var(--papel);     /* 13.62:1 sobre grafito (10.82:1 en Original/Añil/Siena) */
   --texto-apagado-sobre-grafito: #9C9C9A;  /* 4.95:1 sobre grafito */
-  --texto-acento: var(--petroleo-oscuro);  /* petróleo como TEXTO (no como marca): 8.59:1 */
+  --texto-acento: var(--petroleo-oscuro);  /* petróleo como TEXTO (no como marca): 10.82:1 sobre papel blanco (8.59:1 en Original/Añil/Siena) */
 
   --borde: #B9B6AC;
   --borde-fuerte: var(--grafito);
@@ -71,7 +83,19 @@
    es el rojo real de Dourado & Fernández, puesto como valor por defecto
    para el envío comparativo de las 7 plantillas de asesoría/gestoría (ver
    nota junto a --petroleo en :root). El petróleo nativo se recupera con
-   la clase .paleta-original de aquí abajo. */
+   la clase .paleta-original de aquí abajo.
+
+   --papel/--papel-panel también son ahora una DEMOSTRACIÓN puesta al papel
+   blanco de Dourado en el :root bare (ver nota junto a --papel de arriba).
+   Original, Añil y Siena no son Dourado, así que las tres devuelven el
+   papel gris nativo de esta plantilla: solo Teja (el bare :root) enseña el
+   papel de Dourado, no las variantes de acento alternativo. */
+html.paleta-original,
+html.paleta-anil,
+html.paleta-siena {
+  --papel: #E7E5DF;
+  --papel-panel: #DEDCD5;      /* papel nativo de esta plantilla, el mismo de antes de la demostración */
+}
 html.paleta-original {
   --petroleo: #3E6E6B; --petroleo-oscuro: #2F5350;  /* petróleo nativo de esta plantilla:
     blanco/petroleo 5.76:1, petroleo-oscuro/papel 6.74:1 (ver contrast.js) */

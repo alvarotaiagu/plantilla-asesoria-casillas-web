@@ -75,3 +75,21 @@ console.log('Añil                                      blanco/#2C4A76 =', contr
   '  #1F3554/papel =', contrast('#1F3554', PAPEL).toFixed(2));
 console.log('Siena                                     blanco/#8A4A28 =', contrast(BLANCO, '#8A4A28').toFixed(2),
   '  #6B3A1F/papel =', contrast('#6B3A1F', PAPEL).toFixed(2));
+
+/* --- papel blanco de Dourado en Teja (bare :root), ver README "El control
+   de paleta" y nota junto a --papel en style.css. Original/Añil/Siena
+   siguen sobre PAPEL (gris nativo, #E7E5DF) calculado arriba; esto recalcula
+   los mismos tokens de texto contra el blanco real de Dourado, sin asumir
+   que el ratio mejora solo por ser más claro. */
+const PAPEL_TEJA = '#FFFFFF';
+const PAPEL_PANEL_TEJA = '#F2F0EA';
+const TEXTO_APAGADO = '#636567';
+const PETROLEO_OSCURO_TEJA = '#7A1418';
+console.log('\n--- Teja: papel blanco de Dourado (#FFFFFF) y panel (#F2F0EA) ---');
+console.log('texto (grafito) / papel blanco      ', contrast(GRAFITO, PAPEL_TEJA).toFixed(2));
+console.log('texto (grafito) / papel-panel        ', contrast(GRAFITO, PAPEL_PANEL_TEJA).toFixed(2));
+console.log('texto-apagado / papel blanco         ', contrast(TEXTO_APAGADO, PAPEL_TEJA).toFixed(2));
+console.log('texto-apagado / papel-panel          ', contrast(TEXTO_APAGADO, PAPEL_PANEL_TEJA).toFixed(2));
+console.log('texto-acento (petroleo-oscuro) / papel blanco', contrast(PETROLEO_OSCURO_TEJA, PAPEL_TEJA).toFixed(2));
+console.log('texto-sobre-grafito (=papel=blanco) / grafito', contrast(PAPEL_TEJA, GRAFITO).toFixed(2));
+console.log('papel blanco / papel-panel (¿se distinguen?) ', contrast(PAPEL_TEJA, PAPEL_PANEL_TEJA).toFixed(2));
