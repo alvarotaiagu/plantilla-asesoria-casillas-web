@@ -363,6 +363,98 @@ async function recorrer(p, paso = 500, espera = 130) {
     await p.context().close();
   }
 
+  /* ==================================================================
+     10 · Control de paleta (demostración, ver README "El control de
+     paleta"; se borra entero al entregar la web ya como oficial)
+     ================================================================== */
+  {
+    const p = await pagina(b);
+    await p.goto(BASE, { waitUntil: 'networkidle' });
+    await p.waitForTimeout(400);
+
+    const inicial = await p.evaluate(() => {
+      const cs = getComputedStyle(document.documentElement);
+      return {
+        visible: document.getElementById('paleta').hidden === false,
+        pressed: document.getElementById('paleta-petroleo').getAttribute('aria-pressed'),
+        petroleo: cs.getPropertyValue('--petroleo').trim()
+      };
+    });
+    ok('paleta: el mando aparece con JS y arranca en Petróleo',
+      inicial.visible && inicial.pressed === 'true' && inicial.petroleo.toLowerCase() === '#3e6e6b', inicial);
+
+    await p.click('#paleta-anil');
+    const anil = await p.evaluate(() => ({
+      clase: document.documentElement.classList.contains('paleta-anil'),
+      pressed: {
+        petroleo: document.getElementById('paleta-petroleo').getAttribute('aria-pressed'),
+        anil: document.getElementById('paleta-anil').getAttribute('aria-pressed')
+      },
+      petroleoVar: getComputedStyle(document.documentElement).getPropertyValue('--petroleo').trim(),
+      guardado: (() => { try { return localStorage.getItem('casillas-paleta'); } catch (e) { return null; } })()
+    }));
+    ok('paleta: Añil cambia la variable --petroleo en vivo y marca aria-pressed',
+      anil.clase && anil.pressed.anil === 'true' && anil.pressed.petroleo === 'false' &&
+      anil.petroleoVar.toLowerCase() === '#2c4a76' && anil.guardado === 'anil', anil);
+
+    await p.click('#paleta-siena');
+    const siena = await p.evaluate(() => ({
+      clase: document.documentElement.classList.contains('paleta-siena'),
+      claseAnilFuera: !document.documentElement.classList.contains('paleta-anil'),
+      petroleoVar: getComputedStyle(document.documentElement).getPropertyValue('--petroleo').trim(),
+      guardado: (() => { try { return localStorage.getItem('casillas-paleta'); } catch (e) { return null; } })()
+    }));
+    ok('paleta: Siena releva a Añil (una sola clase de paleta a la vez) y guarda en localStorage',
+      siena.clase && siena.claseAnilFuera && siena.petroleoVar.toLowerCase() === '#8a4a28' && siena.guardado === 'siena', siena);
+
+    /* deja terminar la transición de 0.2s del botón antes de capturar, o
+       la imagen pilla el fotograma a medio camino entre colores */
+    await p.waitForTimeout(300);
+    const pulsados = await p.evaluate(() => ({
+      petroleo: document.getElementById('paleta-petroleo').getAttribute('aria-pressed'),
+      anil: document.getElementById('paleta-anil').getAttribute('aria-pressed'),
+      siena: document.getElementById('paleta-siena').getAttribute('aria-pressed')
+    }));
+    ok('paleta: solo el botón activo (Siena) queda marcado como pulsado',
+      pulsados.petroleo === 'false' && pulsados.anil === 'false' && pulsados.siena === 'true', pulsados);
+    await p.screenshot({ path: path.join(CAPS, 'v-paleta-siena.png') });
+
+    /* recarga: la paleta guardada se aplica sin parpadeo, antes de que
+       corra main.js (el bloqueante del <head> ya la ha puesto) */
+    await p.goto(BASE, { waitUntil: 'commit' });
+    const sinFlash = await p.evaluate(() => document.documentElement.classList.contains('paleta-siena'));
+    ok('paleta: tras recargar, la clase ya está puesta al vuelo (sin esperar a main.js)', sinFlash === true, sinFlash);
+    await p.waitForLoadState('networkidle');
+    const trasCarga = await p.evaluate(() => ({
+      clase: document.documentElement.classList.contains('paleta-siena'),
+      pressed: document.getElementById('paleta-siena').getAttribute('aria-pressed')
+    }));
+    ok('paleta: la paleta guardada persiste tras la carga completa y el botón queda marcado',
+      trasCarga.clase && trasCarga.pressed === 'true', trasCarga);
+
+    ok('sin errores de consola tras usar el control de paleta', p.__errores.length === 0, p.__errores);
+    await p.context().close();
+  }
+
+  /* ==================================================================
+     11 · Paleta: el mando no tapa el aviso de cookies, ni al revés
+     ================================================================== */
+  {
+    const p = await pagina(b, { viewport: { width: 390, height: 844 } });
+    await p.goto(BASE, { waitUntil: 'networkidle' });
+    await p.waitForTimeout(400);
+    const solape = await p.evaluate(() => {
+      const paleta = document.getElementById('paleta').getBoundingClientRect();
+      const cookie = document.querySelector('.cookie-banner').getBoundingClientRect();
+      const solapaVertical = paleta.top < cookie.bottom && cookie.top < paleta.bottom;
+      const solapaHorizontal = paleta.left < cookie.right && cookie.left < paleta.right;
+      return { cookieH: getComputedStyle(document.documentElement).getPropertyValue('--cookie-h').trim(), paleta, cookie, solapa: solapaVertical && solapaHorizontal };
+    });
+    ok('paleta: con el aviso de cookies abierto (móvil), el mando no se solapa con él', solape.solapa === false, solape);
+    await p.screenshot({ path: path.join(CAPS, 'v-paleta-vs-cookies.png') });
+    await p.context().close();
+  }
+
   await b.close();
 
   const fallos = res.filter(r => !r.ok);

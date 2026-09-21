@@ -1,7 +1,7 @@
 {
- "fecha": "2026-09-18T22:00:32.759Z",
+ "fecha": "2026-09-21T12:43:15.349Z",
  "base": "http://127.0.0.1:8973/",
- "total": 46,
+ "total": 54,
  "fallos": 0,
  "pruebas": [
   {
@@ -76,14 +76,14 @@
    "detalle": {
     "n": 8,
     "dias": [
-     "135",
-     "134",
-     "214",
-     "285",
-     "305",
-     "310",
-     "32",
-     "63"
+     "132",
+     "131",
+     "211",
+     "282",
+     "302",
+     "307",
+     "29",
+     "60"
     ],
     "proximas": 1,
     "todasNumericas": true
@@ -95,14 +95,14 @@
    "detalle": {
     "n": 8,
     "dias": [
-     "135",
-     "134",
-     "214",
-     "285",
-     "305",
-     "310",
-     "32",
-     "63"
+     "132",
+     "131",
+     "211",
+     "282",
+     "302",
+     "307",
+     "29",
+     "60"
     ],
     "proximas": 1,
     "todasNumericas": true
@@ -187,14 +187,14 @@
    "prueba": "reduced-motion: el calendario sigue calculando los días (contenido, no movimiento)",
    "ok": true,
    "detalle": [
-    "135",
-    "134",
-    "214",
-    "285",
-    "305",
-    "310",
-    "32",
-    "63"
+    "132",
+    "131",
+    "211",
+    "282",
+    "302",
+    "307",
+    "29",
+    "60"
    ]
   },
   {
@@ -354,6 +354,93 @@
    "prueba": "privacidad: existe y explica cookies y mapa",
    "ok": true,
    "detalle": null
+  },
+  {
+   "prueba": "paleta: el mando aparece con JS y arranca en Petróleo",
+   "ok": true,
+   "detalle": {
+    "visible": true,
+    "pressed": "true",
+    "petroleo": "#3E6E6B"
+   }
+  },
+  {
+   "prueba": "paleta: Añil cambia la variable --petroleo en vivo y marca aria-pressed",
+   "ok": true,
+   "detalle": {
+    "clase": true,
+    "pressed": {
+     "petroleo": "false",
+     "anil": "true"
+    },
+    "petroleoVar": "#2C4A76",
+    "guardado": "anil"
+   }
+  },
+  {
+   "prueba": "paleta: Siena releva a Añil (una sola clase de paleta a la vez) y guarda en localStorage",
+   "ok": true,
+   "detalle": {
+    "clase": true,
+    "claseAnilFuera": true,
+    "petroleoVar": "#8A4A28",
+    "guardado": "siena"
+   }
+  },
+  {
+   "prueba": "paleta: solo el botón activo (Siena) queda marcado como pulsado",
+   "ok": true,
+   "detalle": {
+    "petroleo": "false",
+    "anil": "false",
+    "siena": "true"
+   }
+  },
+  {
+   "prueba": "paleta: tras recargar, la clase ya está puesta al vuelo (sin esperar a main.js)",
+   "ok": true,
+   "detalle": true
+  },
+  {
+   "prueba": "paleta: la paleta guardada persiste tras la carga completa y el botón queda marcado",
+   "ok": true,
+   "detalle": {
+    "clase": true,
+    "pressed": "true"
+   }
+  },
+  {
+   "prueba": "sin errores de consola tras usar el control de paleta",
+   "ok": true,
+   "detalle": []
+  },
+  {
+   "prueba": "paleta: con el aviso de cookies abierto (móvil), el mando no se solapa con él",
+   "ok": true,
+   "detalle": {
+    "cookieH": "222px",
+    "paleta": {
+     "x": 14.390625,
+     "y": 562.96875,
+     "width": 218.015625,
+     "height": 44.640625,
+     "top": 562.96875,
+     "right": 232.40625,
+     "bottom": 607.609375,
+     "left": 14.390625
+    },
+    "cookie": {
+     "x": 16,
+     "y": 622.46875,
+     "width": 358,
+     "height": 205.53125,
+     "top": 622.46875,
+     "right": 374,
+     "bottom": 828,
+     "left": 16
+    },
+    "solapa": false
+   }
   }
  ]
 }

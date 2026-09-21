@@ -41,8 +41,26 @@
   --margen-lateral: 1.9rem;   /* ancho de la franja "margen de formulario" */
   --radio: 2px;
   --max: 78rem;
+  --cookie-h: 0px; /* alto real del aviso de cookies mientras está abierto: lo
+                       fija js/main.js para que el mando de paleta no quede tapado */
 
   color-scheme: light;
+}
+
+/* -------------------------- Control de paleta --------------------------
+   BLOQUE DE DEMOSTRACIÓN: se borra entero al entregar la web ya como
+   oficial (ver README, "El control de paleta"). Solo cambia el color de
+   marca — el papel, el grafito y el texto son los mismos en las tres, y el
+   logo real no cambia de color con el mando. Contraste comprobado con
+   scripts/contrast.js: blanco sobre el color de relleno ≥5.76:1, y la
+   variante oscura como texto sobre papel ≥6.74:1, igual que el petróleo
+   real (--texto-acento toma la variante oscura por var(), así que sigue
+   el cambio de paleta sola). */
+html.paleta-anil {
+  --petroleo: #2C4A76; --petroleo-oscuro: #1F3554;
+}
+html.paleta-siena {
+  --petroleo: #8A4A28; --petroleo-oscuro: #6B3A1F;
 }
 
 /* ==========================================================================
@@ -634,6 +652,36 @@ html.has-motion .split-char { display: inline-block; transform: translate3d(0,11
 }
 .whatsapp-flotante svg { width: 1.6rem; height: 1.6rem; }
 @media (min-width: 960px) { .whatsapp-flotante { right: calc(var(--margen-lateral) + 1.3rem); } }
+
+/* ---------- Control de paleta (demostración, ver nota arriba en :root) ----------
+   Mismo lenguaje visual que el resto del sitio (casilla rectangular, sin
+   radio, tipografía mono en mayúsculas) en vez de la píldora redondeada de
+   otras plantillas: aquí no hay nada redondeado en todo el sitio. */
+.paleta { display: none; }
+.paleta:not([hidden]) {
+  display: flex; position: fixed; z-index: 40; left: 1.2rem; bottom: calc(1.2rem + var(--cookie-h));
+  align-items: center; gap: 0.6rem; background: var(--papel-panel); border: 1.5px solid var(--borde);
+  padding: 0.5rem 0.6rem 0.5rem 0.9rem;
+  box-shadow: 0 16px 32px -18px rgba(43,46,51,0.45);
+  transition: bottom 0.3s ease;
+}
+.paleta-rotulo {
+  margin: 0; font-family: var(--f-mono); font-weight: 600; font-size: 0.62rem;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--texto-apagado);
+}
+.paleta-botones { display: flex; gap: 0.3rem; }
+.paleta-botones button {
+  font-family: var(--f-mono); font-weight: 600; font-size: 0.66rem; letter-spacing: 0.04em;
+  cursor: pointer; background: transparent; color: var(--texto-apagado);
+  border: 1.5px solid var(--borde); padding: 0.36rem 0.7rem;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+.paleta-botones button:hover { color: var(--texto); border-color: var(--borde-fuerte); }
+.paleta-botones button[aria-pressed="true"] { background: var(--petroleo); color: var(--texto-sobre-petroleo); border-color: var(--petroleo); }
+@media (max-width: 480px) {
+  .paleta:not([hidden]) { left: 0.9rem; bottom: calc(0.9rem + var(--cookie-h)); padding: 0.4rem 0.45rem 0.4rem 0.7rem; }
+  .paleta-rotulo { display: none; }
+}
 
 /* ==========================================================================
    Barra de progreso interna del scroll y utilidades de movimiento

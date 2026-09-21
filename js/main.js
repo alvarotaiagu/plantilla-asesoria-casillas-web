@@ -35,11 +35,69 @@
     var CLAVE = "vilasybugallo-cookie-ack";
     var visto = false;
     try { visto = localStorage.getItem(CLAVE) === "1"; } catch (e) {}
+
+    /* alto real del aviso en --cookie-h: para que el mando de paleta (si
+       está activo) no quede tapado por el aviso mientras está abierto.
+       No es solo offsetHeight: se mide la distancia real desde el borde
+       inferior de la ventana hasta el borde superior del aviso (que ya
+       incluye su propio "bottom: 1rem"), o el mando quedaría un par de
+       píxeles corto y rozaría el aviso. Un ResizeObserver, no solo el
+       evento resize: el texto del aviso cambia de alto cuando la
+       tipografía de Google Fonts termina de cargar, sin que la ventana
+       cambie de tamaño, y una sola medida al arrancar se queda corta. */
+    function actualizarAltoAviso() {
+      if (banner.hidden) { html.style.setProperty("--cookie-h", "0px"); return; }
+      var reservado = window.innerHeight - banner.getBoundingClientRect().top;
+      html.style.setProperty("--cookie-h", Math.ceil(reservado) + "px");
+    }
+
     if (!visto) banner.hidden = false;
+    actualizarAltoAviso();
+    if (typeof ResizeObserver !== "undefined") {
+      new ResizeObserver(actualizarAltoAviso).observe(banner);
+    } else {
+      window.addEventListener("resize", actualizarAltoAviso);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(actualizarAltoAviso);
+    }
+
     ok.addEventListener("click", function () {
       banner.hidden = true;
+      actualizarAltoAviso();
       try { localStorage.setItem(CLAVE, "1"); } catch (e) {}
     });
+  })();
+
+  /* ---------------- El control de paleta ----------------
+     NO ES PARTE DEL SITIO. Es un mando para enseñar la misma web en tres
+     paletas de color delante del cliente mientras decide. Al entregar la
+     web ya como oficial se borra esta función, el bloque .paleta del CSS,
+     el <div id="paleta"> y la bandera del <head>. */
+  (function initPaleta() {
+    var caja = document.getElementById("paleta");
+    var botones = {
+      petroleo: document.getElementById("paleta-petroleo"),
+      anil: document.getElementById("paleta-anil"),
+      siena: document.getElementById("paleta-siena")
+    };
+    if (!caja || !botones.petroleo || !botones.anil || !botones.siena) return;
+    var CLAVE_PALETA = "casillas-paleta";
+
+    caja.hidden = false; // sin JS no se enseña: no haría nada
+
+    function pintar(nombre, guardar) {
+      html.classList.remove("paleta-anil", "paleta-siena");
+      if (nombre !== "petroleo") html.classList.add("paleta-" + nombre);
+      Object.keys(botones).forEach(function (k) {
+        botones[k].setAttribute("aria-pressed", String(k === nombre));
+      });
+      if (guardar) { try { localStorage.setItem(CLAVE_PALETA, nombre); } catch (e) {} }
+    }
+
+    var actual = html.classList.contains("paleta-anil") ? "anil" : html.classList.contains("paleta-siena") ? "siena" : "petroleo";
+    pintar(actual, false);
+    botones.petroleo.addEventListener("click", function () { pintar("petroleo", true); });
+    botones.anil.addEventListener("click", function () { pintar("anil", true); });
+    botones.siena.addEventListener("click", function () { pintar("siena", true); });
   })();
 
   /* --- menú móvil ----------------------------------------------------------- */

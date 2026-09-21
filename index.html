@@ -57,6 +57,17 @@
   ]
 }
 </script>
+
+<script>
+/* Paleta elegida en el control de maqueta. Se resuelve aquí, antes de
+   pintar, o la página arrancaría en una paleta y saltaría a otra.
+   CONTROL DE DEMOSTRACIÓN: ver README, "El control de paleta", para
+   quitarlo al entregar la web ya como oficial. */
+try {
+  var p = localStorage.getItem('casillas-paleta');
+  if (p === 'anil' || p === 'siena') document.documentElement.classList.add('paleta-' + p);
+} catch (e) {}
+</script>
 </head>
 <body>
 
@@ -481,6 +492,21 @@
   <p>Usamos únicamente cookies técnicas para recordar que ya ha visto este aviso. El mapa solo carga cookies de Google si usted pulsa «Ver el mapa». Más información en la <a href="privacidad.html">política de privacidad</a>.</p>
   <div class="cookie-acciones">
     <button class="boton boton-primario cookie-ack" type="button">De acuerdo</button>
+  </div>
+</div>
+
+<!-- ===================== CONTROL DE PALETA =====================
+     Esto NO es parte del sitio: es un mando para enseñar la misma web con
+     tres paletas de color distintas delante del cliente, mientras decide.
+     Al entregar la web ya como oficial se borra este bloque, el bloque
+     .paleta del CSS, la función initPaleta() de main.js y la bandera del
+     <head>. Viene con [hidden]: sin JS no aparece, porque no haría nada. -->
+<div class="paleta" id="paleta" hidden>
+  <p class="paleta-rotulo">Paleta</p>
+  <div class="paleta-botones" role="group" aria-label="Paleta de color de la maqueta">
+    <button type="button" id="paleta-petroleo" aria-pressed="true">Petróleo</button>
+    <button type="button" id="paleta-anil" aria-pressed="false">Añil</button>
+    <button type="button" id="paleta-siena" aria-pressed="false">Siena</button>
   </div>
 </div>
 
